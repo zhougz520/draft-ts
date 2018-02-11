@@ -1,0 +1,92 @@
+{
+  "name": "xprst-draft",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xprst/xprst-draft.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "better-npm-run start",
+    "build": "yarn run lint && better-npm-run compile-prod",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js && tslint --format verbose \"src/**/*.{ts,tsx}\"",
+    "dev": "better-npm-run dev",
+    "compile": "better-npm-run compile-dev"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "gulp --gulpfile ./gulp/gulpfile.dev.js --cwd ./",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "draft:*",
+        "PORT": "8888"
+      }
+    },
+    "compile-dev": {
+      "command": "gulp --gulpfile ./gulp/gulpfile.dev.compile.js --cwd ./",
+      "env": {
+        "DEBUG": "draft:*",
+        "NODE_ENV": "development"
+      }
+    },
+    "compile-prod": {
+      "command": "gulp --gulpfile ./gulp/gulpfile.prod.compile.js --cwd ./",
+      "env": {
+        "DEBUG": "draft:*",
+        "NODE_ENV": "production"
+      }
+    }
+  },
+  "dependencies": {
+    "fbjs": "^0.8.16",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.5",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "styled-components": "^3.1.6"
+  },
+  "devDependencies": {
+    "@types/debug": "^0.0.30",
+    "@types/immutable": "^3.8.7",
+    "@types/lodash": "^4.14.102",
+    "@types/node": "^9.4.5",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.0.36",
+    "@types/react-dom": "^16.0.3",
+    "@types/webpack": "^3.8.5",
+    "awesome-typescript-loader": "^3.4.1",
+    "babel-eslint": "^8.2.1",
+    "better-npm-run": "^0.1.0",
+    "css-loader": "^0.28.9",
+    "debug": "^3.1.0",
+    "eslint": "^4.17.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.2.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-webpack": "^1.5.0",
+    "html-webpack-plugin": "^2.30.1",
+    "merge2": "^1.2.1",
+    "office-ui-fabric-react": "^5.49.0",
+    "run-sequence": "^2.2.1",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.20.1",
+    "tslint": "^5.9.1",
+    "tslint-react": "^3.4.0",
+    "typescript": "^2.7.1",
+    "uglify-es": "^3.3.10",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
