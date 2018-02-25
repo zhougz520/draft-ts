@@ -65,13 +65,12 @@ export default class Example extends React.PureComponent<any, any> {
 
     render() {
         const { editorState } = this.state;
-        console.log({ editorState });
 
-        interface CustProps { type: string; }
+        interface ICustProps { type: string; }
 
-        const CustOl = styled<CustProps, 'ol'>('ol')`
+        const CustOl = styled<ICustProps, 'ol'>('ol')`
             list-style-type: ${
-                (p: CustProps) => {
+                (p: ICustProps) => {
                     switch (p.type) {
                         case 'ol':
                             return 'lower-roman';
@@ -124,6 +123,7 @@ export default class Example extends React.PureComponent<any, any> {
     }
 }
 
+/* tslint:disable:max-classes-per-file */
 export class StyleButton extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -149,6 +149,7 @@ export class StyleButton extends React.Component<any, any> {
         );
     }
 }
+/* tslint:enable:max-classes-per-file */
 
 const INLINE_STYLES: any = [
     { label: 'Bold', style: 'BOLD' },

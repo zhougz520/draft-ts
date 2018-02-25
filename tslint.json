@@ -47,7 +47,8 @@
         "object-literal-sort-keys": false,        
         "variable-name": false,        
         "no-unused-expression": false,
-        "prefer-for-of": false
+        "prefer-for-of": false,
+        "jsx-no-multiline-js": false,
     },
     "rulesDirectory": []
 }
