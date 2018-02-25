@@ -109,6 +109,7 @@ export default class Example extends React.PureComponent<any, any> {
                         handleKeyCommand={this.handleKeyCommand}
                         onChange={this.onChange}
                         onTab={this.onTab}
+                        // tslint:disable-next-line:jsx-no-string-ref
                         ref="editor"
                     />
                 </div>

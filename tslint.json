@@ -44,18 +44,10 @@
             true,
             "ignore-same-line"
         ],
-        "object-literal-sort-keys": false,
-        "no-conditional-assignment": false,
-        "variable-name": false,
-        "no-console": false,
+        "object-literal-sort-keys": false,        
+        "variable-name": false,        
         "no-unused-expression": false,
-        "prefer-for-of": false,
-        
-        "max-classes-per-file": false,
-        "jsx-no-multiline-js": false,
-        "no-var-requires": false,
-        "interface-name": false,
-        "jsx-no-string-ref": false
+        "prefer-for-of": false
     },
     "rulesDirectory": []
 }

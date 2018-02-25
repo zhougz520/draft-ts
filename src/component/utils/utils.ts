@@ -1,3 +1,4 @@
+/* tslint:disable:no-var-requires */
 const containsNode = require('fbjs/lib/containsNode');
 const emptyFunction = require('fbjs/lib/emptyFunction');
 const getActiveElement = require('fbjs/lib/getActiveElement');
@@ -12,6 +13,7 @@ const setImmediate = require('fbjs/lib/setImmediate');
 const Style = require('fbjs/lib/Style');
 const UnicodeUtils = require('fbjs/lib/UnicodeUtils');
 const UserAgent = require('fbjs/lib/UserAgent');
+/* tslint:enable:no-var-requires */
 
 export const utils: any = {
     containsNode,
