@@ -2,7 +2,6 @@ import * as React from 'react';
 import { DraftPublic } from '../../../src';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import 'office-ui-fabric-react/dist/css/fabric.css';
-import styled from 'styled-components';
 
 import { CustColorPicker } from './ColorPicker';
 
@@ -66,21 +65,6 @@ export default class Example extends React.PureComponent<any, any> {
     render() {
         const { editorState } = this.state;
 
-        interface ICustProps { type: string; }
-
-        const CustOl = styled<ICustProps, 'ol'>('ol')`
-            list-style-type: ${
-                (p: ICustProps) => {
-                    switch (p.type) {
-                        case 'ol':
-                            return 'lower-roman';
-                        default:
-                            return 'upper-roman';
-                    }
-                }
-            };
-        `;
-
         return (
             <div className="RichEditor-root">
                 <div className="ms-Grid">
@@ -112,12 +96,6 @@ export default class Example extends React.PureComponent<any, any> {
                         ref="editor"
                     />
                 </div>
-                <CustOl type="de">
-                    <li>123</li>
-                </CustOl>
-                <CustOl type="ol">
-                    <li>123</li>
-                </CustOl>
             </div>
         );
     }
