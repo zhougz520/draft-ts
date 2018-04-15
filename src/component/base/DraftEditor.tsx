@@ -89,6 +89,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
                     ref={(ref: HTMLElement | null) => (this.editorContainer = ref)}
                 >
                     <div
+                        className="editorContainer"
                         contentEditable={!readOnly}
                         // TODO data-contents
                         onBeforeInput={this._onBeforeInput}

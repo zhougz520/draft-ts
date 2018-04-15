@@ -1,0 +1,165 @@
+@charset "UTF-8";
+.editorContainer p, .editorContainer ol, .editorContainer ul, .editorContainer pre, .editorContainer blockquote, .editorContainer h1, .editorContainer h2, .editorContainer h3, .editorContainer h4, .editorContainer h5, .editorContainer h6 {
+  margin: 0;
+  padding: 0;
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.editorContainer ol, .editorContainer ul {
+  padding-left: 1.5em;
+}
+.editorContainer ol > li, .editorContainer ul > li {
+  list-style-type: none;
+}
+.editorContainer ul > li ::before {
+  content: "•";
+}
+.editorContainer li ::before {
+  display: inline-block;
+  white-space: nowrap;
+  width: 1.2em;
+  margin-left: -1.5em;
+  margin-right: 0.3em;
+  text-align: right;
+}
+.editorContainer ol, .editorContainer ul {
+  padding-left: 1.5em;
+}
+.editorContainer ol li {
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+  counter-increment: list-0;
+}
+.editorContainer ol li:before {
+  content: counter(list-0, decimal) ". ";
+}
+.editorContainer ol li.ql-indent-1 {
+  counter-increment: list-1;
+}
+.editorContainer ol li.ql-indent-1:before {
+  content: counter(list-1, lower-alpha) ". ";
+}
+.editorContainer ol li.ql-indent-1 {
+  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-2 {
+  counter-increment: list-2;
+}
+.editorContainer ol li.ql-indent-2:before {
+  content: counter(list-2, lower-roman) ". ";
+}
+.editorContainer ol li.ql-indent-2 {
+  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-3 {
+  counter-increment: list-3;
+}
+.editorContainer ol li.ql-indent-3:before {
+  content: counter(list-3, decimal) ". ";
+}
+.editorContainer ol li.ql-indent-3 {
+  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-4 {
+  counter-increment: list-4;
+}
+.editorContainer ol li.ql-indent-4:before {
+  content: counter(list-4, lower-alpha) ". ";
+}
+.editorContainer ol li.ql-indent-4 {
+  counter-reset: list-5 list-6 list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-5 {
+  counter-increment: list-5;
+}
+.editorContainer ol li.ql-indent-5:before {
+  content: counter(list-5, lower-roman) ". ";
+}
+.editorContainer ol li.ql-indent-5 {
+  counter-reset: list-6 list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-6 {
+  counter-increment: list-6;
+}
+.editorContainer ol li.ql-indent-6:before {
+  content: counter(list-6, decimal) ". ";
+}
+.editorContainer ol li.ql-indent-6 {
+  counter-reset: list-7 list-8 list-9;
+}
+.editorContainer ol li.ql-indent-7 {
+  counter-increment: list-7;
+}
+.editorContainer ol li.ql-indent-7:before {
+  content: counter(list-7, lower-alpha) ". ";
+}
+.editorContainer ol li.ql-indent-7 {
+  counter-reset: list-8 list-9;
+}
+.editorContainer ol li.ql-indent-8 {
+  counter-increment: list-8;
+}
+.editorContainer ol li.ql-indent-8:before {
+  content: counter(list-8, lower-roman) ". ";
+}
+.editorContainer ol li.ql-indent-8 {
+  counter-reset: list-9;
+}
+.editorContainer ol li.ql-indent-9 {
+  counter-increment: list-9;
+}
+.editorContainer ol li.ql-indent-9:before {
+  content: counter(list-9, decimal) ". ";
+}
+.editorContainer .ql-indent-1 {
+  padding-left: 3em;
+}
+.editorContainer li.ql-indent-1 {
+  padding-left: 4.5em;
+}
+.editorContainer .ql-indent-2 {
+  padding-left: 6em;
+}
+.editorContainer li.ql-indent-2 {
+  padding-left: 7.5em;
+}
+.editorContainer .ql-indent-3 {
+  padding-left: 9em;
+}
+.editorContainer li.ql-indent-3 {
+  padding-left: 10.5em;
+}
+.editorContainer .ql-indent-4 {
+  padding-left: 12em;
+}
+.editorContainer li.ql-indent-4 {
+  padding-left: 13.5em;
+}
+.editorContainer .ql-indent-5 {
+  padding-left: 15em;
+}
+.editorContainer li.ql-indent-5 {
+  padding-left: 16.5em;
+}
+.editorContainer .ql-indent-6 {
+  padding-left: 18em;
+}
+.editorContainer li.ql-indent-6 {
+  padding-left: 19.5em;
+}
+.editorContainer .ql-indent-7 {
+  padding-left: 21em;
+}
+.editorContainer li.ql-indent-7 {
+  padding-left: 22.5em;
+}
+.editorContainer .ql-indent-8 {
+  padding-left: 24em;
+}
+.editorContainer li.ql-indent-8 {
+  padding-left: 25.5em;
+}
+.editorContainer .ql-indent-9 {
+  padding-left: 27em;
+}
+.editorContainer li.ql-indent-9 {
+  padding-left: 28.5em;
+}
