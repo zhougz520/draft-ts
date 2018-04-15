@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DraftPublic } from '../../../src';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import 'office-ui-fabric-react/dist/css/fabric.css';
+import './index.scss';
 
 import { CustColorPicker } from './ColorPicker';
 
@@ -68,7 +69,7 @@ export default class Example extends React.PureComponent<any, any> {
         return (
             <div className="RichEditor-root">
                 <div className="ms-Grid">
-                    <div className="ms-Grid-row">
+                    <div className="ms-Grid-row" id="msGrid">
                         <div className="ms-Grid-col ms-sm6 ms-md4 ms-lg2">A</div>
                         <div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">B</div>
                     </div>

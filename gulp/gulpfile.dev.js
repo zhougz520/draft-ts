@@ -29,6 +29,7 @@ const runDevServer = () => {
             rules: [
                 {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
                 {test: /\.css$/, use: ['style-loader', 'css-loader']},
+                {test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
                 {enforce: 'pre', test: /\.js$/, loader: 'source-map-loader'}
             ]
         }
