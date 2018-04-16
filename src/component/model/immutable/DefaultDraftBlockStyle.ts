@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import { DraftStyleDefault_ul, DraftStyleDefault_ol } from '../../assets/DraftStyleDefault';
 import { Map } from 'immutable';
 
-const UL_WRAP: JSX.Element = React.createElement('ul', {style: DraftStyleDefault_ul});
-const OL_WRAP: JSX.Element = React.createElement('ol', {style: DraftStyleDefault_ol});
+const UL_WRAP: JSX.Element = React.createElement('ul');
+const OL_WRAP: JSX.Element = React.createElement('ol');
 const PRE_WRAP: JSX.Element = React.createElement('pre');
 
 export const DefaultDraftBlockStyle: any = Map({

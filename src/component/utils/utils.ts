@@ -6,6 +6,7 @@ const getElementPosition = require('fbjs/lib/getElementPosition');
 const getScrollPosition = require('fbjs/lib/getScrollPosition');
 const getViewportDimensions = require('fbjs/lib/getViewportDimensions');
 const invariant = require('fbjs/lib/invariant');
+const joinClasses = require('fbjs/lib/joinClasses');
 const Keys = require('fbjs/lib/Keys');
 const nullthrows = require('fbjs/lib/nullthrows');
 const Scroll = require('fbjs/lib/Scroll');
@@ -23,6 +24,7 @@ export const utils: any = {
     getScrollPosition,
     getViewportDimensions,
     invariant,
+    joinClasses,
     Keys,
     nullthrows,
     Scroll,

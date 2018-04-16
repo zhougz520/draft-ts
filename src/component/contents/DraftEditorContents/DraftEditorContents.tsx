@@ -11,6 +11,11 @@ import { ContentBlock } from '../../model/immutable/ContentBlock';
 
 import { DraftOffsetKey } from '../../selection/DraftOffsetKey';
 
+import { utils } from '../../utils/utils';
+const { joinClasses } = utils;
+
+import '../../assets/Sass/Indent.scss';
+
 export class DraftEditorContents extends React.Component<IDraftEditorContentsProps, any> {
     public shouldComponentUpdate(nextProps: IDraftEditorContentsProps): boolean {
         const prevEditorState: EditorState = this.props.editorState;
@@ -89,19 +94,21 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
 
             const depth: number = block.getDepth();
             // TODO className
-            let className: React.CSSProperties = {};
+            let className: string = 'list-item';
 
             if (Element === 'li') {
                 const shouldResetCount =
                     lastWrapperTemplate !== wrapperTemplate ||
                     currentDepth === null ||
                     depth > currentDepth;
-                className = shouldResetCount ? DraftStyleDefault_depth(depth) : DraftStyleDefault_depth(depth);
+                console.log(shouldResetCount);
+
+                className = joinClasses(className, DraftStyleDefault_depth(depth));
             }
 
             const Component: typeof DraftEditorBlock = DraftEditorBlock;
             const childProps: any = {
-                'style': className,
+                className,
                 'data-block': true,
                 /* $FlowFixMe(>=0.53.0 site=www,mobile) This comment suppresses an
                  * error when upgrading Flow's support for React. Common errors found
