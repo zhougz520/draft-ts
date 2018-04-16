@@ -94,7 +94,7 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
 
             const depth: number = block.getDepth();
             // TODO className
-            let className: string = 'list-item';
+            let className: string = '';
 
             if (Element === 'li') {
                 const shouldResetCount =

@@ -6,5 +6,9 @@ export const DraftStyleDefault_block: React.CSSProperties = {
 };
 
 export const DraftStyleDefault_depth = (depth: number): string => {
-    return 'ql-indent-' + depth;
+    if (depth === 0) {
+        return ''
+    } else {
+        return 'ql-indent-' + depth;
+    }
 };
