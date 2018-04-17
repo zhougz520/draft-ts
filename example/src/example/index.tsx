@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { DraftPublic } from '../../../src';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import 'office-ui-fabric-react/dist/css/fabric.css';
-import './index.scss';
+import { Button } from 'antd';
 
-import { CustColorPicker } from './ColorPicker';
+import './index.scss';
 
 const { Editor, EditorState, RichUtils, InlineUtils } = DraftPublic;
 
@@ -67,11 +65,8 @@ export default class Example extends React.PureComponent<any, any> {
 
         return (
             <div className="RichEditor-root">
-                <div className="ms-Grid">
-                    <div className="ms-Grid-row" id="msGrid">
-                        <div className="ms-Grid-col ms-sm6 ms-md4 ms-lg2">A</div>
-                        <div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">B</div>
-                    </div>
+                <div id="msGrid" style={{ height: '24px', width: '100%'}}>
+                    Sass Test
                 </div>
                 <BlockStyleControls
                     editorState={editorState}
@@ -80,10 +75,6 @@ export default class Example extends React.PureComponent<any, any> {
                 <InlineStyleControls
                     editorState={editorState}
                     onToggle={this.toggleInlineStyle}
-                />
-                <CustColorPicker
-                    editorState={editorState}
-                    onToggle={this.toggleColorStyle}
                 />
                 <div className="RichEditor-editor" onClick={this.focus}>
                     <Editor
@@ -113,17 +104,18 @@ export class StyleButton extends React.Component<any, any> {
     }
 
     render() {
-        let primary: boolean = false;
+        let primary: any = undefined;
         if (this.props.active) {
-            primary = true;
+            primary = 'primary';
         }
 
         return (
-            <DefaultButton
-                primary={primary}
-                text={this.props.label}
+            <Button
+                type={primary}
                 onMouseDown={this.onToggle}
-            />
+            >
+                {this.props.label}
+            </Button>
         );
     }
 }

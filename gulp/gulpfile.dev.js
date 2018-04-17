@@ -4,6 +4,7 @@ const runSequence = require('run-sequence');
 const tasks = require('./tasks');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 const dist = 'dev';
 
@@ -27,8 +28,24 @@ const runDevServer = () => {
         resolve: {extensions: ['.ts', '.tsx', '.js', '.json']},
         module: {
             rules: [
-                {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
+                {
+                    test: /\.tsx?$/,
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true,
+                        getCustomTransformers: () => ({
+                            before: [tsImportPluginFactory({
+                                libraryName: 'antd',
+                                libraryDirectory: 'lib',
+                                style: true
+                            })]
+                        }),
+                        compilerOptions: {module: 'es2015'}
+                    },
+                    exclude: /node_modules/
+                },
                 {test: /\.css$/, use: ['style-loader', 'css-loader']},
+                {test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader']},
                 {test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
                 {enforce: 'pre', test: /\.js$/, loader: 'source-map-loader'}
             ]

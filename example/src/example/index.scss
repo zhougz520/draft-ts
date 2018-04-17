@@ -3,3 +3,8 @@ $backgroundcolor : aqua;
 #msGrid {
     background-color: $backgroundcolor;
 }
+
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
