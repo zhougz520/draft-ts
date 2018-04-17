@@ -15,7 +15,7 @@ const { nullthrows } = utils;
 
 /**
  * @param MAX_INDENT tab缩进的最大层级0~MAX_INDENT
- * 需要与\src\component\assets\Sass\Indent.scss文件中的MAX_INDENT参数对应
+ * 需要与\src\component\assets\Sass\Indent.scss文件中的MAX_INDENT参数对应，小1
  */
 const MAX_INDENT: number = 9;
 
