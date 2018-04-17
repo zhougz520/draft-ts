@@ -5,7 +5,7 @@ import { findAncestorOffsetKey } from './findAncestorOffsetKey';
 import { getSelectionOffsetKeyForNode } from './getSelectionOffsetKeyForNode';
 import { getUpdatedSelectionState } from './getUpdatedSelectionState';
 
-import { utils } from '../utils/utils';
+import { utils } from '../utils/fbjs';
 const { nullthrows, invariant } = utils;
 
 interface ISelectionPoint {

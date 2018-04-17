@@ -7,7 +7,7 @@ import { SelectionState } from '../../model/immutable/SelectionState';
 import { getDraftEditorSelection } from '../../selection/getDraftEditorSelection';
 import { IDOMDerivedSelection } from '../../selection/DOMDerivedSelection';
 
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { invariant } = utils;
 
 /**

@@ -4,7 +4,7 @@ import { SelectionState } from '../model/immutable/SelectionState';
 import { DraftOffsetKey } from './DraftOffsetKey';
 import { IDraftOffsetKeyPath } from './DraftOffsetKeyPath';
 
-import { utils } from '../utils/utils';
+import { utils } from '../utils/fbjs';
 const { nullthrows } = utils;
 
 export function getUpdatedSelectionState(

@@ -5,7 +5,7 @@ import { IDraftEditorLeafProps } from './DraftEditorLeaf.Props';
 import { DraftEditorTextNode } from '../DraftEditorTextNode/DraftEditorTextNode';
 
 import { setDraftEditorSelection } from '../../selection/setDraftEditorSelection';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { invariant } = utils;
 
 /**

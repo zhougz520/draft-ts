@@ -1,4 +1,4 @@
-import { utils } from './utils';
+import { utils } from './fbjs';
 const { UserAgent } = utils;
 
 const isOSX = UserAgent.isPlatform('Mac OS X');

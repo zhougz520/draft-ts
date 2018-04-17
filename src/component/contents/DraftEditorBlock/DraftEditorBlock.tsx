@@ -11,7 +11,7 @@ import { SelectionState } from '../../model/immutable/SelectionState';
 import { ContentBlock } from '../../model/immutable/ContentBlock';
 
 import { DraftOffsetKey } from '../../selection/DraftOffsetKey';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { getElementPosition, getScrollPosition, getViewportDimensions, invariant, Scroll, Style } = utils;
 
 const SCROLL_BUFFER: number = 10;

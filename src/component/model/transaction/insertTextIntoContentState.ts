@@ -7,7 +7,7 @@ import { CharacterMetadata } from '../immutable/CharacterMetadata';
 import { insertIntoList } from './insertIntoList';
 
 import { Repeat } from 'immutable';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { invariant } = utils;
 
 export function insertTextIntoContentState(

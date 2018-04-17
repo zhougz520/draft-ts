@@ -10,7 +10,7 @@ import { adjustBlockDepthForContentState } from '../transaction/adjustBlockDepth
 import { DraftModifier } from './DraftModifier';
 
 import { List } from 'immutable';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { nullthrows } = utils;
 
 /**

@@ -1,7 +1,7 @@
 import { DraftEditorCommand } from '../model/constants/DraftEditorCommand';
 
 import { KeyBindingUtil } from './KeyBindingUtil';
-import { utils } from './utils';
+import { utils } from './fbjs';
 const { Keys, UserAgent } = utils;
 
 const isOSX: boolean = UserAgent.isPlatform('Mac OS X');

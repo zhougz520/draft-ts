@@ -4,7 +4,7 @@ import { CharacterMetadata } from './CharacterMetadata';
 import { findRangesImmutable } from './findRangesImmutable';
 
 import { Record, List, Repeat } from 'immutable';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { emptyFunction } = utils;
 
 const returnTrue: any = emptyFunction.thatReturnsTrue;

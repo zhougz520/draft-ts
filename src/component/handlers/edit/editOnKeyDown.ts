@@ -11,7 +11,7 @@ import { keyCommandMoveSelectionToStartOfBlock } from './commands/keyCommandMove
 import { keyCommandPlainBackspace } from './commands/keyCommandPlainBackspace';
 
 import { KeyBindingUtil } from '../../utils/KeyBindingUtil';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 
 const { isOptionKeyCommand } = KeyBindingUtil;
 const { Keys, UserAgent } = utils;

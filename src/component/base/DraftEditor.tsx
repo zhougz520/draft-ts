@@ -18,7 +18,7 @@ import { DraftEditorModes } from '../handlers/DraftEditorModes';
 // TODO
 import { getDefaultKeyBinding } from '../utils/getDefaultKeyBinding';
 import { generateRandomKey } from '../model/keys/generateRandomKey';
-import { utils } from '../utils/utils';
+import { utils } from '../utils/fbjs';
 
 const { Style, getScrollPosition, invariant, Scroll } = utils;
 const { getDraftInlineStyleMap } = DefaultDraftInlineStyle;

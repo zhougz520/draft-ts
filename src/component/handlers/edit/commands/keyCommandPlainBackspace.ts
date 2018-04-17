@@ -5,7 +5,7 @@ import { SelectionState } from '../../../model/immutable/SelectionState';
 import { moveSelectionBackward } from '../../../model/transaction/moveSelectionBackward';
 import { removeTextWithStrategy } from '../../../model/transaction/removeTextWithStrategy';
 
-import { utils } from '../../../utils/utils';
+import { utils } from '../../../utils/fbjs';
 const { UnicodeUtils } = utils;
 
 /**

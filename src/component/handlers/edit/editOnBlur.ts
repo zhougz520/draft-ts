@@ -2,7 +2,7 @@ import { DraftEditor } from '../../base/DraftEditor';
 import { EditorState } from '../../model/immutable/EditorState';
 import { SelectionState } from '../../model/immutable/SelectionState';
 
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { containsNode, getActiveElement } = utils;
 
 export function editOnBlur(editor: DraftEditor, e: any): void {

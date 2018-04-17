@@ -11,7 +11,7 @@ import { ContentBlock } from '../../model/immutable/ContentBlock';
 
 import { DraftOffsetKey } from '../../selection/DraftOffsetKey';
 
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { joinClasses } = utils;
 
 import '../../assets/Sass/Indent.scss';

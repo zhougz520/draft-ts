@@ -8,7 +8,7 @@ import { EditorChangeType } from '../../model/immutable/EditorChangeType';
 import { DraftModifier } from '../../model/modifier/DraftModifier';
 import { findAncestorOffsetKey } from '../../selection/findAncestorOffsetKey';
 import { DraftOffsetKey } from '../../selection/DraftOffsetKey';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { nullthrows } = utils;
 
 const DOUBLE_NEWLINE: string = '\n\n';

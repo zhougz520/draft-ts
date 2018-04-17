@@ -1,7 +1,7 @@
 import { SelectionState } from '../model/immutable/SelectionState';
 
 import { DraftJsDebugLogging } from '../utils/DraftJsDebugLogging';
-import { utils } from '../utils/utils';
+import { utils } from '../utils/fbjs';
 const { containsNode, getActiveElement, invariant } = utils;
 
 export function setDraftEditorSelection(

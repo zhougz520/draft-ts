@@ -5,7 +5,7 @@ import { DraftInlineStyle } from '../../model/immutable/CharacterMetadata';
 
 import { DraftModifier } from '../../model/modifier/DraftModifier';
 import { isSelectionAtLeafStart } from '../../selection/isSelectionAtLeafStart';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 const { Keys } = utils;
 
 /**

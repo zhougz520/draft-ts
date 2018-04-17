@@ -5,7 +5,7 @@ import { CharacterMetadata } from '../immutable/CharacterMetadata';
 import { BlockMap } from '../immutable/BlockMapBuilder';
 
 import { generateRandomKey } from '../keys/generateRandomKey';
-import { utils } from '../../utils/utils';
+import { utils } from '../../utils/fbjs';
 import { List } from 'immutable';
 const { invariant } = utils;
 
