@@ -7,7 +7,6 @@ import {
 } from '../assets/DraftEditorStyle';
 import { IDraftEditorProps, IDraftEditorState, IDraftScrollPosition } from './DraftEditor.Props';
 import { EditorState } from '../model/immutable/EditorState';
-import * as DefaultDraftInlineStyle from '../model/immutable/DefaultDraftInlineStyle';
 import * as DefaultDraftBlockStyle from '../model/immutable/DefaultDraftBlockStyle';
 
 import { DraftEditorContents } from '../contents/DraftEditorContents/DraftEditorContents';
@@ -18,10 +17,10 @@ import { DraftEditorModes } from '../handlers/DraftEditorModes';
 // TODO
 import { getDefaultKeyBinding } from '../utils/getDefaultKeyBinding';
 import { generateRandomKey } from '../model/keys/generateRandomKey';
+import { getDraftInlineStyleMap } from '../utils/collection/inline';
 import { utils } from '../utils/fbjs';
 
 const { Style, getScrollPosition, invariant, Scroll } = utils;
-const { getDraftInlineStyleMap } = DefaultDraftInlineStyle;
 const { getDraftBlockStyleMap } = DefaultDraftBlockStyle;
 
 /**

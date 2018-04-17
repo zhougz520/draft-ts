@@ -5,7 +5,7 @@ import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 import { DraftPublic } from '../../../src';
-const { DefaultDraftInlineStyle } = DraftPublic;
+const { InlineUtils } = DraftPublic;
 
 const ButtonDivStyle = {
     display: 'inline-block'
@@ -25,7 +25,7 @@ export class CustColorPicker extends React.Component<any, any> {
     render() {
         const { isCalloutVisible } = this.state;
 
-        const currentColor = DefaultDraftInlineStyle
+        const currentColor = InlineUtils
             .getSelectionCustomInlineStyle(this.props.editorState, ['COLOR']).COLOR;
         const color = currentColor && currentColor.substring(6);
 

@@ -3,10 +3,10 @@
 */
 
 import { OrderedMap, List } from 'immutable';
-import { EditorState } from '../model/immutable/EditorState';
-import { ContentBlock } from '../model/immutable/ContentBlock';
-import { SelectionState } from '../model/immutable/SelectionState';
-import { ContentState } from '../model/immutable/ContentState';
+import { EditorState } from '../../model/immutable/EditorState';
+import { ContentBlock } from '../../model/immutable/ContentBlock';
+import { SelectionState } from '../../model/immutable/SelectionState';
+import { ContentState } from '../../model/immutable/ContentState';
 
 /**
  * 返回选定Block的集合

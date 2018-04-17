@@ -5,6 +5,9 @@ import { RichTextEditorUtil } from './component/model/modifier/RichTextEditorUti
 import * as DefaultDraftBlockStyle from './component/model/immutable/DefaultDraftBlockStyle';
 import * as DefaultDraftInlineStyle from './component/model/immutable/DefaultDraftInlineStyle';
 
+import * as InlineUtils from './component/utils/collection/inline';
+import * as BlockUtils from './component/utils/collection/block';
+
 export const DraftPublic = {
     DefaultDraftBlockStyle,
     DefaultDraftInlineStyle,
@@ -13,5 +16,8 @@ export const DraftPublic = {
     EditorState,
     ContentState,
 
-    RichUtils: RichTextEditorUtil
+    RichUtils: RichTextEditorUtil,
+
+    InlineUtils,
+    BlockUtils
 };

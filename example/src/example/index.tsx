@@ -6,7 +6,7 @@ import './index.scss';
 
 import { CustColorPicker } from './ColorPicker';
 
-const { Editor, EditorState, RichUtils, DefaultDraftInlineStyle } = DraftPublic;
+const { Editor, EditorState, RichUtils, InlineUtils } = DraftPublic;
 
 export default class Example extends React.PureComponent<any, any> {
     constructor(props: any) {
@@ -54,7 +54,7 @@ export default class Example extends React.PureComponent<any, any> {
 
     toggleColorStyle = (inlineStyle: any) => {
         this.onChange(
-            DefaultDraftInlineStyle.toggleCustomInlineStyle(
+            InlineUtils.toggleCustomInlineStyle(
                 this.state.editorState,
                 'color',
                 inlineStyle
@@ -88,7 +88,7 @@ export default class Example extends React.PureComponent<any, any> {
                 <div className="RichEditor-editor" onClick={this.focus}>
                     <Editor
                         editorState={editorState}
-                        inlineStyleRenderMap={DefaultDraftInlineStyle.getDraftInlineStyleMap()}
+                        inlineStyleRenderMap={InlineUtils.getDraftInlineStyleMap()}
                         handleKeyCommand={this.handleKeyCommand}
                         onChange={this.onChange}
                         onTab={this.onTab}
