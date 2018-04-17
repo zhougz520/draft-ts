@@ -31,8 +31,7 @@ export default class Example extends React.PureComponent<any, any> {
     focus = () => (this.refs.editor as any).focus();
 
     onTab = (e: any) => {
-        const maxDepth: number = 6;
-        this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
+        this.onChange(RichUtils.onTab(e, this.state.editorState));
     }
 
     toggleBlockType = (blockType: any) => {

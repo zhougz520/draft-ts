@@ -1,5 +1,6 @@
 import { DraftEditor } from './component/base/DraftEditor';
 import { EditorState } from './component/model/immutable/EditorState';
+import { ContentState } from './component/model/immutable/ContentState';
 import { RichTextEditorUtil } from './component/model/modifier/RichTextEditorUtil';
 import * as DefaultDraftBlockStyle from './component/model/immutable/DefaultDraftBlockStyle';
 import * as DefaultDraftInlineStyle from './component/model/immutable/DefaultDraftInlineStyle';
@@ -10,6 +11,7 @@ export const DraftPublic = {
 
     Editor: DraftEditor,
     EditorState,
+    ContentState,
 
     RichUtils: RichTextEditorUtil
 };

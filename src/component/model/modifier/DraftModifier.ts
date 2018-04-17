@@ -11,7 +11,7 @@ import { splitBlockInContentState } from '../transaction/splitBlockInContentStat
 
 import { OrderedSet } from 'immutable';
 
-export const DraftModifier: any = {
+export const DraftModifier = {
     replaceText(
         contentState: ContentState,
         rangeToReplace: SelectionState,
@@ -103,10 +103,21 @@ export const DraftModifier: any = {
     setBlockType(
         contentState: ContentState,
         selectionState: SelectionState,
-        blockType: string   // TODO DraftBlockType
+        blockType: string,   // TODO DraftBlockType
+        depth?: number
     ): ContentState {
+        let config: any = {
+            type: blockType
+        }
+        if (depth !== undefined) {
+            config = {
+                type: blockType,
+                depth
+            }
+        }
+
         return modifyBlockForContentState(contentState, selectionState, (block: ContentBlock) =>
-            block.merge({ type: blockType, depth: 0 }) as ContentBlock
+            block.merge(config) as ContentBlock
         );
     }
 };

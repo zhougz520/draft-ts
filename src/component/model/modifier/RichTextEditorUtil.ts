@@ -8,14 +8,22 @@ import { BlockMap } from '../immutable/BlockMapBuilder';
 import { DraftEditorCommand } from '../constants/DraftEditorCommand';
 import { adjustBlockDepthForContentState } from '../transaction/adjustBlockDepthForContentState';
 import { DraftModifier } from './DraftModifier';
+
+import { List } from 'immutable';
 import { utils } from '../../utils/utils';
 const { nullthrows } = utils;
 
-export const RichTextEditorUtil: any = {
+/**
+ * @param MAX_INDENT tab缩进的最大层级0~MAX_INDENT
+ * 需要与\src\component\assets\Sass\Indent.scss文件中的MAX_INDENT参数对应
+ */
+const MAX_INDENT: number = 9;
+
+export const RichTextEditorUtil = {
     handleKeyCommand(
         editorState: EditorState,
         command: DraftEditorCommand | string
-    ) {
+    ): EditorState | null {
         switch (command) {
             case 'bold':
                 return RichTextEditorUtil.toggleInlineStyle(editorState, 'BOLD');
@@ -25,7 +33,7 @@ export const RichTextEditorUtil: any = {
                 return RichTextEditorUtil.toggleInlineStyle(editorState, 'UNDERLINE');
             case 'code':
                 // TODO toggleCode
-                return RichTextEditorUtil.toggleCode(editorState);
+                // return RichTextEditorUtil.toggleCode(editorState);
             case 'backspace':
             case 'backspace-word':
             case 'backspace-to-start-of-line':
@@ -34,7 +42,7 @@ export const RichTextEditorUtil: any = {
             case 'delete-word':
             case 'delete-to-end-of-block':
                 // TODO onDelete
-                return RichTextEditorUtil.onDelete(editorState);
+                // return RichTextEditorUtil.onDelete(editorState);
             default:
                 // they may have custom editor commands; ignore those
                 return null;
@@ -87,6 +95,11 @@ export const RichTextEditorUtil: any = {
         return null;
     },
 
+    /**
+     * 修改BlockType用于界面渲染
+     * @param editorState 当前editorState
+     * @param blockType 新的blockType
+     */
     toggleBlockType(
         editorState: EditorState,
         blockType: string   // TODO DraftBlockType
@@ -125,9 +138,16 @@ export const RichTextEditorUtil: any = {
                 ? 'unstyled'
                 : blockType;
 
+        // 当设置样式不为列表的时候depth重置为0
+        let depth: number | undefined = undefined;
+        const specialBlockType: List<string> = List(['unordered-list-item', 'ordered-list-item']);
+        if (specialBlockType.includes(typeToSet) === false) {
+            depth = 0;
+        }
+
         return EditorState.push(
             editorState,
-            DraftModifier.setBlockType(content, target, typeToSet),
+            DraftModifier.setBlockType(content, target, typeToSet, depth),
             'change-block-type'
         );
     },
@@ -178,7 +198,7 @@ export const RichTextEditorUtil: any = {
     onTab(
         e: any,
         editorState: EditorState,
-        maxDepth: number
+        maxDepth: number = MAX_INDENT
     ): EditorState {
         const selection: SelectionState = editorState.getSelection();
         const key: string = selection.getAnchorKey();
@@ -250,7 +270,8 @@ export const RichTextEditorUtil: any = {
             }
 
             if (type !== 'unstyled') {
-                return DraftModifier.setBlockType(content, selection, 'unstyled');
+                // 清除样式的时候把depth重置为0
+                return DraftModifier.setBlockType(content, selection, 'unstyled', 0);
             }
         }
 

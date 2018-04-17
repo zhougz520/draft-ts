@@ -268,7 +268,7 @@ export function extractInlineStyle(editorState: EditorState) {
 export function removeAllInlineStyles(editorState: EditorState): EditorState {
     const currentStyles: DraftInlineStyle = editorState.getCurrentInlineStyle();
     let contentState: ContentState = editorState.getCurrentContent();
-    currentStyles.forEach((style) => {
+    currentStyles.forEach((style: string) => {
         contentState = DraftModifier.removeInlineStyle(
             contentState,
             editorState.getSelection(),
@@ -305,7 +305,7 @@ export function toggleCustomInlineStyle(
 
     if (selection.isCollapsed()) {
         nextEditorState = currentStyle
-            .reduce((state, s) => RichTextEditorUtil.toggleInlineStyle(state, s),
+            .reduce((state: EditorState, s: string) => RichTextEditorUtil.toggleInlineStyle(state, s),
             nextEditorState);
     }
 
