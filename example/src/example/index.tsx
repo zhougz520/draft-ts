@@ -4,7 +4,7 @@ import { Button, Select, Radio } from 'antd';
 
 import './index.scss';
 
-const { Editor, EditorState, RichUtils, InlineUtils } = DraftPublic;
+const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils } = DraftPublic;
 
 export default class Example extends React.PureComponent<any, any> {
     constructor(props: any) {
@@ -90,6 +90,23 @@ export default class Example extends React.PureComponent<any, any> {
         );        
     }
 
+    toggleTextAlign = (textAlign: any) => {
+        this.onChange(
+            BlockUtils.setBlockData(
+                this.state.editorState,
+                { 'text-align': textAlign.target.value }
+            )
+        );           
+    }
+
+    blockStyleFn(block: any): string {
+        const blockAlignment = block.getData() && block.getData().get('text-align');
+        if (blockAlignment) {
+            return `${blockAlignment}-aligned-block`;
+        }
+        return '';
+    }
+
     render() {
         const { editorState } = this.state;
 
@@ -105,6 +122,10 @@ export default class Example extends React.PureComponent<any, any> {
                 <InlineStyleControls
                     editorState={editorState}
                     onToggle={this.toggleInlineStyle}
+                />
+                <TextAlignControls
+                    editorState={editorState}
+                    onToggle={this.toggleTextAlign}                
                 />
                 FontSize:<FontSizeControls
                     editorState={editorState}
@@ -131,6 +152,7 @@ export default class Example extends React.PureComponent<any, any> {
                         onTab={this.onTab}
                         // tslint:disable-next-line:jsx-no-string-ref
                         ref="editor"
+                        blockStyleFn={this.blockStyleFn}
                     />
                 </div>
             </div>
@@ -315,5 +337,25 @@ const BgColorControls: any = (props: any) => {
                 )
             }
         </Radio.Group>
+    );
+}
+
+const TEXT_ALIGN = ['left', 'center', 'right', 'justify'];
+const TextAlignControls: any = (props: any) => {
+    const { editorState } = props;
+    let textAlign: Map<any, any> = BlockUtils.getSelectedBlocksMetadata(editorState).get('text-align');
+
+    return (
+        <div className="RichEditor-controls">
+            <Radio.Group value={textAlign} onChange={props.onToggle}>
+                {
+                    TEXT_ALIGN.map(
+                        (align: any) => {
+                            return <Radio.Button value={align} key={align}>{align}</Radio.Button>
+                        }
+                    )
+                }
+            </Radio.Group>
+        </div>
     );
 }

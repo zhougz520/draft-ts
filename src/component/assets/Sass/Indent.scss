@@ -90,4 +90,37 @@ div.editorContainer {
             padding-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
         }
     }
+
+    .center-aligned-block {
+        text-align: center !important;
+    }
+
+    .center-aligned-block > div {
+        display: inline-block;
+    }
+ 
+    .justify-aligned-block {
+        text-align: justify !important;
+    }
+
+    .justify-aligned-block > div {
+        display: inline-block;
+    }    
+
+    .right-aligned-block {
+        text-align: right !important;
+    }
+
+    .right-aligned-block > div {
+        display: inline-block;
+    }    
+
+    .left-aligned-block {
+        text-align: left !important;
+    }
+    
+    .left-aligned-block > div {
+        display: inline-block;
+    }    
+    
 }
