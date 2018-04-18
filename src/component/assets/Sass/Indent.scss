@@ -17,75 +17,77 @@ $MAX_INDENT: 10;
     @return unquote($strRtn);
 };
 
-p, ol, ul, pre, blockquote, h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    padding: 0;
-    counter-reset: resets(1, $MAX_INDENT);
-}
-
-ol, ul {
-    padding-left: 1.5em;
-}
-
-ol > li, ul > li {
-    list-style-type: none;
-}
-
-ul > li {
-    &:before {
-        content: '\2022';
-        position: absolute;
-    }
-}
-
-li {
-    &:before {
-        display: inline-block;
-        white-space: nowrap;
-        width: $LIST_STYLE_WIDTH;
-        margin-left: -1 * $LIST_STYLE_OUTER_WIDTH;
-        margin-right: $LIST_STYLE_MARGIN;
-        text-align: right;
-    }
-}
-
-ol, ul {
-    li {
-        padding-left: $LIST_STYLE_OUTER_WIDTH;
-    }
-}
-
-ol {
-    li {
+div.editorContainer {
+    p, ol, ul, pre, blockquote, h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
         counter-reset: resets(1, $MAX_INDENT);
-        counter-increment: unquote('list-0');
+    }
+    
+    ol, ul {
+        padding-left: 1.5em;
+    }
+    
+    ol > li, ul > li {
+        list-style-type: none;
+    }
+    
+    ul > li {
         &:before {
-            content: unquote('counter(list-0, ' + nth($LIST_STYLE, 1) + ')') '. ';
+            content: '\2022';
             position: absolute;
         }
     }
-    @for $i from 1 through $MAX_INDENT {
-        li.ql-indent-#{$i} {
-            counter-increment: unquote('list-#{$i}');
+    
+    li {
+        &:before {
+            display: inline-block;
+            white-space: nowrap;
+            width: $LIST_STYLE_WIDTH;
+            margin-left: -1 * $LIST_STYLE_OUTER_WIDTH;
+            margin-right: $LIST_STYLE_MARGIN;
+            text-align: right;
+        }
+    }
+    
+    ol, ul {
+        li {
+            padding-left: $LIST_STYLE_OUTER_WIDTH;
+        }
+    }
+    
+    ol {
+        li {
+            counter-reset: resets(1, $MAX_INDENT);
+            counter-increment: unquote('list-0');
             &:before {
-                content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE, $i % 3 + 1) + ')') '. ';
+                content: unquote('counter(list-0, ' + nth($LIST_STYLE, 1) + ')') '. ';
                 position: absolute;
             }
         }
-        @if $i < $MAX_INDENT {
+        @for $i from 1 through $MAX_INDENT {
             li.ql-indent-#{$i} {
-                counter-reset: resets(($i+1), $MAX_INDENT)
-            }            
+                counter-increment: unquote('list-#{$i}');
+                &:before {
+                    content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE, $i % 3 + 1) + ')') '. ';
+                    position: absolute;
+                }
+            }
+            @if $i < $MAX_INDENT {
+                li.ql-indent-#{$i} {
+                    counter-reset: resets(($i+1), $MAX_INDENT)
+                }            
+            }
         }
     }
-}
-
-@for $i from 1 through $MAX_INDENT {
-    .ql-indent-#{$i} {
-        padding-left: 3em * $i
-    }
-
-    li.ql-indent-#{$i} {
-        padding-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
+    
+    @for $i from 1 through $MAX_INDENT {
+        .ql-indent-#{$i} {
+            padding-left: 3em * $i
+        }
+    
+        li.ql-indent-#{$i} {
+            padding-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
+        }
     }
 }

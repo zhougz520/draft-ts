@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DraftPublic } from '../../../src';
-import { Button } from 'antd';
+import { Button, Select, Radio } from 'antd';
 
 import './index.scss';
 
@@ -50,14 +50,44 @@ export default class Example extends React.PureComponent<any, any> {
         );
     }
 
-    toggleColorStyle = (inlineStyle: any) => {
+    toggleColorStyle = (color: any) => {
         this.onChange(
             InlineUtils.toggleCustomInlineStyle(
                 this.state.editorState,
                 'color',
-                inlineStyle
+                color.target.value
             )
         );
+    }
+
+    toggleBgColorStyle = (color: any) => {
+        this.onChange(
+            InlineUtils.toggleCustomInlineStyle(
+                this.state.editorState,
+                'bgcolor',
+                color.target.value
+            )
+        );
+    }    
+
+    toggleFontSize = (fontSize: any) => {
+        this.onChange(
+            InlineUtils.toggleCustomInlineStyle(
+                this.state.editorState,
+                'fontSize',
+                fontSize
+            )
+        );
+    }
+
+    toggleFontFamily = (fontFamily: any) => {
+        this.onChange(
+            InlineUtils.toggleCustomInlineStyle(
+                this.state.editorState,
+                'fontFamily',
+                fontFamily
+            )
+        );        
     }
 
     render() {
@@ -76,6 +106,22 @@ export default class Example extends React.PureComponent<any, any> {
                     editorState={editorState}
                     onToggle={this.toggleInlineStyle}
                 />
+                FontSize:<FontSizeControls
+                    editorState={editorState}
+                    onToggle={this.toggleFontSize}                    
+                />
+                &nbsp;&nbsp;FontFamily:<FontFamilyControls
+                    editorState={editorState}
+                    onToggle={this.toggleFontFamily}                    
+                />
+                &nbsp;&nbsp;Color:<ColorControls
+                    editorState={editorState}
+                    onToggle={this.toggleColorStyle}                     
+                />
+                &nbsp;&nbsp;BgColor:<BgColorControls
+                    editorState={editorState}
+                    onToggle={this.toggleBgColorStyle}                     
+                />                
                 <div className="RichEditor-editor" onClick={this.focus}>
                     <Editor
                         editorState={editorState}
@@ -118,6 +164,32 @@ export class StyleButton extends React.Component<any, any> {
             </Button>
         );
     }
+}
+
+export class StyleSelect extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props);
+    }
+
+    onToggle = (value: any) => {
+        this.props.onToggle(value);
+    }
+
+    render() {
+        const { selected, options } = this.props;
+
+        return (
+            <Select value={selected} style={{ width: 100 }} onChange={this.onToggle}>
+                {
+                    options.map(
+                        (option: any) => {
+                            return <Select.Option value={option} key={option}>{option}</Select.Option>;
+                        }
+                    )
+                }
+            </Select>
+        );
+    }    
 }
 /* tslint:enable:max-classes-per-file */
 
@@ -178,3 +250,70 @@ const BlockStyleControls: any = (props: any) => {
         </div>
     );
 };
+
+const FONT_SIZE: any = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96];
+const FontSizeControls: any = (props: any) => {
+    const { editorState } = props;
+    let fontSize: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTSIZE']).FONTSIZE
+    if (fontSize) {
+        fontSize = fontSize.substring(9);
+    }
+
+    return (
+        <StyleSelect selected={fontSize} options={FONT_SIZE} onToggle={props.onToggle} />
+    );
+}
+
+const FONT_FAMILY: any = ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'];
+const FontFamilyControls: any = (props: any) => {
+    const { editorState } = props;
+    let fontFamily: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTFAMILY']).FONTFAMILY
+    if (fontFamily) {
+        fontFamily = fontFamily.substring(11);
+    }
+
+    return (
+        <StyleSelect selected={fontFamily} options={FONT_FAMILY} onToggle={props.onToggle} />
+    );
+}
+
+const COLOR_LIST = ['black', 'red', 'orange', 'blue'];
+const ColorControls: any = (props: any) => {
+    const { editorState } = props;
+    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['COLOR']).COLOR
+    if (colorStyle) {
+        colorStyle = colorStyle.substring(6);
+    }
+
+    return (
+        <Radio.Group value={colorStyle} onChange={props.onToggle}>
+            {
+                COLOR_LIST.map(
+                    (color: any) => {
+                        return <Radio.Button value={color} key={color} style={{color: color}}>{color}</Radio.Button>
+                    }
+                )
+            }
+        </Radio.Group>
+    );
+}
+
+const BgColorControls: any = (props: any) => {
+    const { editorState } = props;
+    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['BGCOLOR']).BGCOLOR
+    if (colorStyle) {
+        colorStyle = colorStyle.substring(8);
+    }
+
+    return (
+        <Radio.Group value={colorStyle} onChange={props.onToggle}>
+            {
+                COLOR_LIST.map(
+                    (color: any) => {
+                        return <Radio.Button value={color} key={color} style={{color: color}}>{color}</Radio.Button>
+                    }
+                )
+            }
+        </Radio.Group>
+    );
+}
