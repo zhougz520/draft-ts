@@ -65,8 +65,6 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
 
         const blocksAsArray: ContentBlock[] = content.getBlocksAsArray();
         const processedBlocks: any[] = [];
-        let currentDepth: number | null = null;
-        let lastWrapperTemplate: any = null;
 
         for (let ii: number = 0; ii < blocksAsArray.length; ii++) {
             const block: ContentBlock = blocksAsArray[ii];
@@ -93,16 +91,9 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
                 configForType.element || blockStyleRenderMap.get('unstyled').element;
 
             const depth: number = block.getDepth();
-            // TODO className
-            let className: string = '';
+            let className: string = this.props.blockStyleFn(block);;
 
             if (Element === 'li') {
-                const shouldResetCount =
-                    lastWrapperTemplate !== wrapperTemplate ||
-                    currentDepth === null ||
-                    depth > currentDepth;
-                console.log(shouldResetCount);
-
                 className = joinClasses(className, DraftStyleDefault_depth(depth));
             }
 
@@ -135,13 +126,6 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
                 key,
                 offsetKey
             });
-
-            if (wrapperTemplate) {
-                currentDepth = block.getDepth();
-            } else {
-                currentDepth = null;
-            }
-            lastWrapperTemplate = wrapperTemplate;
         }
 
         const outputBlocks: any[] = [];

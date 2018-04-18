@@ -1,4 +1,4 @@
-import { List, Record, Repeat, OrderedSet } from 'immutable';
+import { List, Record, Repeat, OrderedSet, Map } from 'immutable';
 
 import { CharacterMetadata, DraftInlineStyle } from './CharacterMetadata';
 import { findRangesImmutable } from './findRangesImmutable';
@@ -9,6 +9,7 @@ export interface IBlockNodeConfig {
     text?: string;
     characterList?: List<CharacterMetadata>;
     depth?: number;
+    data?: Map<any, any>;
 }
 
 const defaultRecord: IBlockNodeConfig = {
@@ -16,7 +17,8 @@ const defaultRecord: IBlockNodeConfig = {
     type: 'unstyled',
     text: '',
     characterList: List(),
-    depth: 0
+    depth: 0,
+    data: Map()
 };
 
 export const ContentBlockRecord: Record.Class = Record(defaultRecord);
@@ -63,6 +65,10 @@ export class ContentBlock extends ContentBlockRecord {
     getDepth(): number {
         return this.get('depth');
     }
+
+    getData(): Map<any, any> {
+        return this.get('data');
+    }    
 
     getInlineStyleAt(offset: number): DraftInlineStyle {
         const character: CharacterMetadata = this.getCharacterList().get(offset);

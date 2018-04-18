@@ -1,4 +1,5 @@
 import { EditorState } from '../model/immutable/EditorState';
+import { ContentBlock } from '../model/immutable/ContentBlock';
 import { DraftEditorCommand } from '../model/constants/DraftEditorCommand';
 
 export type DraftTextAlignment = 'left' | 'center' | 'right';
@@ -35,6 +36,9 @@ export interface IDraftEditorProps {
      * 制定文本的对齐方向
      */
     textAlignment?: DraftTextAlignment;
+
+    // 设置block的自定义样式，返回className
+    blockStyleFn?: (block: ContentBlock) => string,
 
     keyBindingFn?: (e: any) => string | null;
 

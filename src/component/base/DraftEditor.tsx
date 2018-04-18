@@ -7,6 +7,7 @@ import {
 } from '../assets/DraftEditorStyle';
 import { IDraftEditorProps, IDraftEditorState, IDraftScrollPosition } from './DraftEditor.Props';
 import { EditorState } from '../model/immutable/EditorState';
+import { ContentBlock } from '../model/immutable/ContentBlock';
 import * as DefaultDraftBlockStyle from '../model/immutable/DefaultDraftBlockStyle';
 
 import { DraftEditorContents } from '../contents/DraftEditorContents/DraftEditorContents';
@@ -20,7 +21,7 @@ import { generateRandomKey } from '../model/keys/generateRandomKey';
 import { getDraftInlineStyleMap } from '../utils/collection/inline';
 import { utils } from '../utils/fbjs';
 
-const { Style, getScrollPosition, invariant, Scroll } = utils;
+const { Style, getScrollPosition, invariant, Scroll, emptyFunction } = utils;
 const { getDraftBlockStyleMap } = DefaultDraftBlockStyle;
 
 /**
@@ -37,6 +38,7 @@ const handlerMap: any = {
  */
 export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditorState> {
     public static defaultProps = {
+        blockStyleFn: emptyFunction.thatReturns(''),
         keyBindingFn: getDefaultKeyBinding,
         readOnly: false,
         inlineStyleRenderMap: getDraftInlineStyleMap(),
@@ -109,6 +111,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
                             editorState={this.props.editorState}
                             inlineStyleRenderMap={this.props.inlineStyleRenderMap}
                             blockStyleRenderMap={this.props.blockStyleRenderMap}
+                            blockStyleFn={this.props.blockStyleFn as (block: ContentBlock) => string}
                         />
                     </div>
                 </div>

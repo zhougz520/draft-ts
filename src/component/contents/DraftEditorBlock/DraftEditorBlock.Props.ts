@@ -17,10 +17,12 @@ export interface IDraftEditorBlockProps {
 
     selection: SelectionState;
 
-    // TODO decorator\direction\blockProps\blockStyleFn
+    // TODO decorator\direction\blockProps
     forceSelection: boolean;
 
     startIndent?: boolean;
 
     inlineStyleRenderMap: any;
+
+    blockStyleFn: Function
 }

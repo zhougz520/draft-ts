@@ -119,5 +119,29 @@ export const DraftModifier = {
         return modifyBlockForContentState(contentState, selectionState, (block: ContentBlock) =>
             block.merge(config) as ContentBlock
         );
-    }
+    },
+
+    setBlockData(
+        contentState: ContentState,
+        selectionState: SelectionState,
+        blockData: Map<any, any>,
+    ): ContentState {
+        return modifyBlockForContentState(
+            contentState,
+            selectionState,
+            (block: ContentBlock) => block.merge({ data: blockData }) as ContentBlock,
+        );
+    },
+
+    mergeBlockData(
+        contentState: ContentState,
+        selectionState: SelectionState,
+        blockData: Map<any, any>,
+    ): ContentState {
+        return modifyBlockForContentState(
+            contentState,
+            selectionState,
+            (block: ContentBlock) => block.merge({ data: block.getData().merge(blockData) }) as ContentBlock,
+        );
+    },    
 };
