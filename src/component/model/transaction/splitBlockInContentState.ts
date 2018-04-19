@@ -6,7 +6,7 @@ import { BlockMap } from '../immutable/BlockMapBuilder';
 
 import { generateRandomKey } from '../keys/generateRandomKey';
 import { utils } from '../../utils/fbjs';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 const { invariant } = utils;
 
 export function splitBlockInContentState(
@@ -32,8 +32,9 @@ export function splitBlockInContentState(
     const blockBelow: ContentBlock = blockAbove.merge({
         key: keyBelow,
         text: text.slice(offset),
-        characterList: chars.slice(offset)
-        // TODO data: Map(),
+        characterList: chars.slice(offset),
+        // TODO 换行会清空data样式，list模式会有问题
+        data: Map()
     }) as ContentBlock;
 
     const blocksBefore = blockMap.toSeq().takeUntil((v) => v === blockToSplit);

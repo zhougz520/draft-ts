@@ -1,5 +1,6 @@
 /* tslint:disable:no-var-requires */
 const containsNode = require('fbjs/lib/containsNode');
+const cx = require('fbjs/lib/cx');
 const emptyFunction = require('fbjs/lib/emptyFunction');
 const getActiveElement = require('fbjs/lib/getActiveElement');
 const getElementPosition = require('fbjs/lib/getElementPosition');
@@ -17,6 +18,7 @@ const UserAgent = require('fbjs/lib/UserAgent');
 /* tslint:enable:no-var-requires */
 
 export const utils: any = {
+    cx,
     containsNode,
     emptyFunction,
     getActiveElement,

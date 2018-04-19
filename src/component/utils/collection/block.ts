@@ -52,6 +52,18 @@ export function setBlockData(
     return EditorState.push(editorState, newContentState, "change-block-data");
 }
 
+export function mergeBlockData(
+    editorState: EditorState,
+    data: any  
+): EditorState {
+    const newContentState: ContentState = DraftModifier.mergeBlockData(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        data
+    );
+    return EditorState.push(editorState, newContentState, "change-block-data");
+}
+
 export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, any> {
     let metaData: Map<any, any> = Map();
     const selectedBlocks: List<ContentBlock> = getSelectedBlocksList(editorState);
@@ -78,4 +90,19 @@ export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, an
         }
     }
     return metaData;
+}
+
+// TODO 设置List的样式数据
+/**
+ * 
+ * @param editorState 当前editorState
+ * @param blockType 需要设置的blockType ['unordered-list-item','ordered-list-item']
+ * @param styleType 自定义的样式类型 ul:disc circle square, ol:decimal lower-alpha lower-roman
+ */
+export function setListBlockStyleData(
+    editorState: EditorState,
+    blockType: string,
+    styleType: string
+): EditorState {
+    return editorState;
 }

@@ -4,7 +4,8 @@ import { Button, Select, Radio } from 'antd';
 
 import './index.scss';
 
-const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils } = DraftPublic;
+const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils, FbjsUtils } = DraftPublic;
+const { cx } = FbjsUtils;
 
 export default class Example extends React.PureComponent<any, any> {
     constructor(props: any) {
@@ -39,6 +40,25 @@ export default class Example extends React.PureComponent<any, any> {
                 blockType
             )
         );
+    }
+
+    toggleBlockTypeClass = (blockType: any) => {
+        const currentBlockClass = BlockUtils.getSelectedBlocksMetadata(this.state.editorState).get('ul');
+        if (currentBlockClass !== blockType) {
+            this.onChange(
+                BlockUtils.mergeBlockData(
+                    this.state.editorState,
+                    { 'ul': blockType }
+                )
+            ); 
+        } else {
+            this.onChange(
+                BlockUtils.mergeBlockData(
+                    this.state.editorState,
+                    { 'ul': undefined }
+                )
+            );             
+        }
     }
 
     toggleInlineStyle = (inlineStyle: any) => {
@@ -91,24 +111,45 @@ export default class Example extends React.PureComponent<any, any> {
     }
 
     toggleTextAlign = (textAlign: any) => {
-        this.onChange(
-            BlockUtils.setBlockData(
-                this.state.editorState,
-                { 'text-align': textAlign.target.value }
-            )
-        );           
+        const currentTextAlignment = BlockUtils.getSelectedBlocksMetadata(this.state.editorState).get('text-align');
+        if (currentTextAlignment !== textAlign) {
+            this.onChange(
+                BlockUtils.mergeBlockData(
+                    this.state.editorState,
+                    { 'text-align': textAlign.target.value }
+                )
+            );  
+        } else {
+            this.onChange(
+                BlockUtils.mergeBlockData(
+                    this.state.editorState,
+                    { 'text-align': undefined }
+                )
+            );             
+        }
+         
     }
 
-    blockStyleFn(block: any): string {
+    blockStyleFn = (block: any): string => {
         const blockAlignment = block.getData() && block.getData().get('text-align');
-        if (blockAlignment) {
-            return `${blockAlignment}-aligned-block`;
-        }
-        return '';
+        const blockUlType = block.getData() && block.getData().get('ul');
+                
+        return this.getListItemClasses(blockAlignment, blockUlType);
+    }
+
+    getListItemClasses = (align: string | undefined, ulType: string | undefined) => {
+        return cx({
+            'block-aligned-center': align === 'center',
+            'block-aligned-justify': align === 'justify',
+            'block-aligned-right': align === 'right',
+            'block-aligned-left': align === 'left',
+            'ulType-circle': ulType === 'circle',
+        });
     }
 
     render() {
         const { editorState } = this.state;
+        console.log(editorState);
 
         return (
             <div className="RichEditor-root">
@@ -118,6 +159,7 @@ export default class Example extends React.PureComponent<any, any> {
                 <BlockStyleControls
                     editorState={editorState}
                     onToggle={this.toggleBlockType}
+                    onToggleClass={this.toggleBlockTypeClass}
                 />
                 <InlineStyleControls
                     editorState={editorState}
@@ -269,6 +311,13 @@ const BlockStyleControls: any = (props: any) => {
                     style={type.style}
                 />
             )}
+            <StyleButton
+                key={'circle'}
+                active={'circle' === blockType}
+                label={'circle'}
+                onToggle={props.onToggleClass}
+                style={'circle'}
+            />            
         </div>
     );
 };
@@ -347,6 +396,7 @@ const TextAlignControls: any = (props: any) => {
 
     return (
         <div className="RichEditor-controls">
+            TextAlign:
             <Radio.Group value={textAlign} onChange={props.onToggle}>
                 {
                     TEXT_ALIGN.map(

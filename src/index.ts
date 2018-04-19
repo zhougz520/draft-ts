@@ -8,6 +8,8 @@ import * as DefaultDraftInlineStyle from './component/model/immutable/DefaultDra
 import * as InlineUtils from './component/utils/collection/inline';
 import * as BlockUtils from './component/utils/collection/block';
 
+import { utils } from './component/utils/fbjs';
+
 export const DraftPublic = {
     DefaultDraftBlockStyle,
     DefaultDraftInlineStyle,
@@ -19,5 +21,6 @@ export const DraftPublic = {
     RichUtils: RichTextEditorUtil,
 
     InlineUtils,
-    BlockUtils
+    BlockUtils,
+    FbjsUtils: utils
 };
