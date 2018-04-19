@@ -15,6 +15,7 @@ import { utils } from '../../utils/fbjs';
 const { joinClasses } = utils;
 
 import '../../assets/Sass/Indent.scss';
+import '../../assets/Sass/TextAlign.scss';
 
 export class DraftEditorContents extends React.Component<IDraftEditorContentsProps, any> {
     public shouldComponentUpdate(nextProps: IDraftEditorContentsProps): boolean {

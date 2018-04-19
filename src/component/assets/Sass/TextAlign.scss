@@ -1,0 +1,17 @@
+div.editorContainer {
+    .center-aligned-block > div {
+        text-align: center !important;
+    }
+    
+    .justify-aligned-block > div {
+        text-align: justify !important;
+    }
+    
+    .right-aligned-block > div {
+        text-align: right !important;
+    }
+    
+    .left-aligned-block > div {
+        text-align: left !important;
+    }
+}

@@ -1,4 +1,5 @@
-$LIST_STYLE: decimal lower-alpha lower-roman;
+$LIST_STYLE_OL: decimal lower-alpha lower-roman;
+$LIST_STYLE_UL: disc circle square;
 $LIST_STYLE_WIDTH: 1.2em;
 $LIST_STYLE_MARGIN: 0.3em;
 $LIST_STYLE_OUTER_WIDTH: $LIST_STYLE_MARGIN + $LIST_STYLE_WIDTH;
@@ -32,13 +33,6 @@ div.editorContainer {
         list-style-type: none;
     }
     
-    ul > li {
-        &:before {
-            content: '\2022';
-            position: absolute;
-        }
-    }
-    
     li {
         &:before {
             display: inline-block;
@@ -50,9 +44,26 @@ div.editorContainer {
         }
     }
     
-    ol, ul {
+    ol {
         li {
             padding-left: $LIST_STYLE_OUTER_WIDTH;
+        }
+    }
+
+    ul {
+        li {
+            margin-left: $LIST_STYLE_OUTER_WIDTH;
+        }
+    }
+
+    ul {
+        li {
+            list-style-type: nth($LIST_STYLE_UL, 1);
+        }
+        @for $i from 1 through $MAX_INDENT {
+            li.ql-indent-#{$i} {
+                list-style-type: nth($LIST_STYLE_UL, $i % 3 + 1);
+            }
         }
     }
     
@@ -61,7 +72,7 @@ div.editorContainer {
             counter-reset: resets(1, $MAX_INDENT);
             counter-increment: unquote('list-0');
             &:before {
-                content: unquote('counter(list-0, ' + nth($LIST_STYLE, 1) + ')') '. ';
+                content: unquote('counter(list-0, ' + nth($LIST_STYLE_OL, 1) + ')') '. ';
                 position: absolute;
             }
         }
@@ -69,7 +80,7 @@ div.editorContainer {
             li.ql-indent-#{$i} {
                 counter-increment: unquote('list-#{$i}');
                 &:before {
-                    content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE, $i % 3 + 1) + ')') '. ';
+                    content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE_OL, $i % 3 + 1) + ')') '. ';
                     position: absolute;
                 }
             }
@@ -82,45 +93,16 @@ div.editorContainer {
     }
     
     @for $i from 1 through $MAX_INDENT {
-        .ql-indent-#{$i} {
-            padding-left: 3em * $i
+        ol {
+            li.ql-indent-#{$i} {
+                padding-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
+            }
         }
-    
-        li.ql-indent-#{$i} {
-            padding-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
+
+        ul {
+            li.ql-indent-#{$i} {
+                margin-left: 3em * $i + $LIST_STYLE_OUTER_WIDTH
+            }            
         }
     }
-
-    .center-aligned-block {
-        text-align: center !important;
-    }
-
-    .center-aligned-block > div {
-        display: inline-block;
-    }
- 
-    .justify-aligned-block {
-        text-align: justify !important;
-    }
-
-    .justify-aligned-block > div {
-        display: inline-block;
-    }    
-
-    .right-aligned-block {
-        text-align: right !important;
-    }
-
-    .right-aligned-block > div {
-        display: inline-block;
-    }    
-
-    .left-aligned-block {
-        text-align: left !important;
-    }
-    
-    .left-aligned-block > div {
-        display: inline-block;
-    }    
-    
 }
