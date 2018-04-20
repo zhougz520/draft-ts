@@ -105,4 +105,19 @@ div.editorContainer {
             }            
         }
     }
+
+    ul {
+        li.unordered-list-item-disc {
+            list-style-type: disc !important;
+        }
+    
+        li.unordered-list-item-circle {
+            list-style-type: circle !important;
+        }
+    
+        li.unordered-list-item-square {
+            list-style-type: square !important;
+        }
+    }
+
 }

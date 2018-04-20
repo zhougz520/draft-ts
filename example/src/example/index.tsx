@@ -43,21 +43,26 @@ export default class Example extends React.PureComponent<any, any> {
     }
 
     toggleBlockTypeClass = (blockType: any) => {
-        const currentBlockClass = BlockUtils.getSelectedBlocksMetadata(this.state.editorState).get('ul');
+        let selectedBlockData: any = BlockUtils.getSelectedBlocksMetadata(this.state.editorState);
+        const currentBlockClass = selectedBlockData.get('unordered-list-item');
         if (currentBlockClass !== blockType) {
+            selectedBlockData = selectedBlockData.set('unordered-list-item', blockType);
             this.onChange(
-                BlockUtils.mergeBlockData(
+                BlockUtils.setListBlockStyleData(
                     this.state.editorState,
-                    { 'ul': blockType }
+                    'unordered-list-item',
+                    selectedBlockData
                 )
             ); 
         } else {
+            selectedBlockData = selectedBlockData.delete('unordered-list-item')
             this.onChange(
-                BlockUtils.mergeBlockData(
+                BlockUtils.setListBlockStyleData(
                     this.state.editorState,
-                    { 'ul': undefined }
+                    'unordered-list-item',
+                    selectedBlockData
                 )
-            );             
+            ); 
         }
     }
 
@@ -132,7 +137,7 @@ export default class Example extends React.PureComponent<any, any> {
 
     blockStyleFn = (block: any): string => {
         const blockAlignment = block.getData() && block.getData().get('text-align');
-        const blockUlType = block.getData() && block.getData().get('ul');
+        const blockUlType = block.getData() && block.getData().get('unordered-list-item');
                 
         return this.getListItemClasses(blockAlignment, blockUlType);
     }
@@ -143,7 +148,7 @@ export default class Example extends React.PureComponent<any, any> {
             'block-aligned-justify': align === 'justify',
             'block-aligned-right': align === 'right',
             'block-aligned-left': align === 'left',
-            'ulType-circle': ulType === 'circle',
+            'unordered-list-item-circle': ulType === 'circle',
         });
     }
 
@@ -299,13 +304,14 @@ const BlockStyleControls: any = (props: any) => {
         .getCurrentContent()
         .getBlockForKey(selection.getStartKey())
         .getType();
+    const currentBlockClass = BlockUtils.getSelectedBlocksMetadata(editorState).get('unordered-list-item');
 
     return (
         <div className="RichEditor-controls">
             {BLOCK_STYLES.map((type: any) =>
                 <StyleButton
                     key={type.label}
-                    active={type.style === blockType}
+                    active={type.style === blockType && currentBlockClass === undefined}
                     label={type.label}
                     onToggle={props.onToggle}
                     style={type.style}

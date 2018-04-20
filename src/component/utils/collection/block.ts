@@ -8,6 +8,7 @@ import { ContentBlock } from '../../model/immutable/ContentBlock';
 import { SelectionState } from '../../model/immutable/SelectionState';
 import { ContentState } from '../../model/immutable/ContentState';
 import { DraftModifier } from '../../model/modifier/DraftModifier';
+import { RichTextEditorUtil } from '../../model/modifier/RichTextEditorUtil';
 
 /**
  * 返回选定Block的集合
@@ -102,7 +103,28 @@ export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, an
 export function setListBlockStyleData(
     editorState: EditorState,
     blockType: string,
-    styleType: string
+    data: any
 ): EditorState {
-    return editorState;
+    const specialBlockType: List<string> = List(['unordered-list-item', 'ordered-list-item']);
+    if (specialBlockType.includes(blockType) === false) {
+        return editorState;
+    }
+
+    const selection: SelectionState = editorState.getSelection();
+    const content: ContentState = editorState.getCurrentContent();
+    const key: string = selection.getAnchorKey();
+    const block: ContentBlock = content.getBlockForKey(key);
+    const depth: number = block.getDepth();
+
+    // TODO 逻辑按取消和设置样式来
+    let editorStateWithBlockType: EditorState | null = null;
+    if (depth === 0) {
+        editorStateWithBlockType = RichTextEditorUtil.toggleBlockType(editorState, blockType)
+    } else {
+        editorStateWithBlockType = editorState;
+    }
+
+    const editorStateWithData: EditorState = setBlockData(editorStateWithBlockType, data);
+
+    return editorStateWithData;
 }
