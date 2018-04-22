@@ -120,4 +120,18 @@ div.editorContainer {
         }
     }
 
+    ol {
+        li.unordered-list-item-decimal {
+            list-style-type: decimal !important;
+        }
+    
+        li.unordered-list-item-lower-alpha {
+            list-style-type: lower-alpha !important;
+        }
+    
+        li.unordered-list-item-lower-roman {
+            list-style-type: lower-roman !important;
+        }
+    }    
+
 }

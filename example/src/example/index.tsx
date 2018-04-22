@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DraftPublic } from '../../../src';
-import { Button, Select, Radio } from 'antd';
+import { Button, Select, Radio, Dropdown, Menu } from 'antd';
 
 import './index.scss';
 
@@ -42,28 +42,24 @@ export default class Example extends React.PureComponent<any, any> {
         );
     }
 
-    toggleBlockTypeClass = (blockType: any) => {
-        let selectedBlockData: any = BlockUtils.getSelectedBlocksMetadata(this.state.editorState);
-        const currentBlockClass = selectedBlockData.get('unordered-list-item');
-        if (currentBlockClass !== blockType) {
-            selectedBlockData = selectedBlockData.set('unordered-list-item', blockType);
-            this.onChange(
-                BlockUtils.setListBlockStyleData(
-                    this.state.editorState,
-                    'unordered-list-item',
-                    selectedBlockData
-                )
-            ); 
-        } else {
-            selectedBlockData = selectedBlockData.delete('unordered-list-item')
-            this.onChange(
-                BlockUtils.setListBlockStyleData(
-                    this.state.editorState,
-                    'unordered-list-item',
-                    selectedBlockData
-                )
-            ); 
-        }
+    toggleULBlockTypeClass = (e: any) => {
+        this.onChange(
+            BlockUtils.setListBlockStyleData(
+                this.state.editorState,
+                'unordered-list-item',
+                e.key === undefined ? 'disc' : e.key
+            )
+        ); 
+    }
+
+    toggleOLBlockTypeClass = (e: any) => {
+        this.onChange(
+            BlockUtils.setListBlockStyleData(
+                this.state.editorState,
+                'ordered-list-item',
+                e.key === undefined ? 'decimal' : e.key
+            )
+        ); 
     }
 
     toggleInlineStyle = (inlineStyle: any) => {
@@ -137,18 +133,24 @@ export default class Example extends React.PureComponent<any, any> {
 
     blockStyleFn = (block: any): string => {
         const blockAlignment = block.getData() && block.getData().get('text-align');
-        const blockUlType = block.getData() && block.getData().get('unordered-list-item');
+        const styleULType = block.getData() && block.getData().get('unordered-list-item');
+        const styleOLType = block.getData() && block.getData().get('ordered-list-item');
                 
-        return this.getListItemClasses(blockAlignment, blockUlType);
+        return this.getListItemClasses(blockAlignment, styleULType === undefined ? styleOLType : styleULType);
     }
 
-    getListItemClasses = (align: string | undefined, ulType: string | undefined) => {
+    getListItemClasses = (align: string | undefined, styleType: string | undefined) => {
         return cx({
             'block-aligned-center': align === 'center',
             'block-aligned-justify': align === 'justify',
             'block-aligned-right': align === 'right',
             'block-aligned-left': align === 'left',
-            'unordered-list-item-circle': ulType === 'circle',
+            'unordered-list-item-disc': styleType === 'disc',
+            'unordered-list-item-circle': styleType === 'circle',
+            'unordered-list-item-square': styleType === 'square',
+            'ordered-list-item-decimal': styleType === 'decimal',
+            'ordered-list-item-lower-alpha': styleType === 'lower-alpha',
+            'ordered-list-item-lower-roman': styleType === 'lower-roman',            
         });
     }
 
@@ -164,8 +166,21 @@ export default class Example extends React.PureComponent<any, any> {
                 <BlockStyleControls
                     editorState={editorState}
                     onToggle={this.toggleBlockType}
-                    onToggleClass={this.toggleBlockTypeClass}
                 />
+                <div className="RichEditor-controls">
+                    <ListTypeControls 
+                        editorState={editorState}
+                        onToggle={this.toggleULBlockTypeClass}
+                        type={'UL'}
+                        list={UL_TYPE}               
+                    />
+                    <ListTypeControls 
+                        editorState={editorState}
+                        onToggle={this.toggleOLBlockTypeClass}
+                        type={'OL'}
+                        list={OL_TYPE}                 
+                    />                    
+                </div>
                 <InlineStyleControls
                     editorState={editorState}
                     onToggle={this.toggleInlineStyle}
@@ -293,8 +308,6 @@ const InlineStyleControls: any = (props: any) => {
 const BLOCK_STYLES: any = [
     { label: 'H1', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
-    { label: 'UL', style: 'unordered-list-item' },
-    { label: 'OL', style: 'ordered-list-item' }
 ];
 
 const BlockStyleControls: any = (props: any) => {
@@ -316,14 +329,7 @@ const BlockStyleControls: any = (props: any) => {
                     onToggle={props.onToggle}
                     style={type.style}
                 />
-            )}
-            <StyleButton
-                key={'circle'}
-                active={'circle' === blockType}
-                label={'circle'}
-                onToggle={props.onToggleClass}
-                style={'circle'}
-            />            
+            )}           
         </div>
     );
 };
@@ -413,5 +419,27 @@ const TextAlignControls: any = (props: any) => {
                 }
             </Radio.Group>
         </div>
+    );
+}
+
+const UL_TYPE = ['disc', 'circle', 'square'];
+const OL_TYPE = ['decimal', 'lower-alpha', 'lower-roman'];
+const ListTypeControls: any = (props: any) => {
+    const menu = (
+        <Menu onClick={props.onToggle}>
+            {
+                props.list.map(
+                    (type: any) => {
+                        return <Menu.Item key={type}>{type}</Menu.Item>
+                    }
+                )
+            }
+        </Menu>
+    );    
+
+    return (
+        <Dropdown.Button onClick={props.onToggle} overlay={menu}>
+            {props.type}
+        </Dropdown.Button>        
     );
 }

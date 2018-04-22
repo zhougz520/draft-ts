@@ -93,9 +93,9 @@ export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, an
     return metaData;
 }
 
-// TODO 设置List的样式数据
+// TODO 设置List的自定义样式类型
 /**
- * 
+ * 设置List的自定义样式类型
  * @param editorState 当前editorState
  * @param blockType 需要设置的blockType ['unordered-list-item','ordered-list-item']
  * @param styleType 自定义的样式类型 ul:disc circle square, ol:decimal lower-alpha lower-roman
@@ -103,8 +103,9 @@ export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, an
 export function setListBlockStyleData(
     editorState: EditorState,
     blockType: string,
-    data: any
+    styleType: string
 ): EditorState {
+    // 如果blockType不是ul\ol，直接结束
     const specialBlockType: List<string> = List(['unordered-list-item', 'ordered-list-item']);
     if (specialBlockType.includes(blockType) === false) {
         return editorState;
@@ -113,15 +114,38 @@ export function setListBlockStyleData(
     const selection: SelectionState = editorState.getSelection();
     const content: ContentState = editorState.getCurrentContent();
     const key: string = selection.getAnchorKey();
-    const block: ContentBlock = content.getBlockForKey(key);
-    const depth: number = block.getDepth();
+    const block: ContentBlock = content.getBlockForKey(key); 
+   
+    const currentBlockData: any = getSelectedBlocksMetadata(editorState);
+    const currentBlockType: string = block.getType();
+    const currentStyleType: string = currentBlockData.get(blockType);
 
-    // TODO 逻辑按取消和设置样式来
+    let data: any = currentBlockData;
     let editorStateWithBlockType: EditorState | null = null;
-    if (depth === 0) {
-        editorStateWithBlockType = RichTextEditorUtil.toggleBlockType(editorState, blockType)
+    if (currentBlockType !==  blockType) {
+        // 1.otherBlockType to ul/ol
+        // 2.ul to ol/ol to ul
+        // 3.ul/ol to otherBlockType 逻辑在 toggleBlockType方法的(specialBlockType.includes(typeToSet) === false)中判断，删除对应的data
+        if (specialBlockType.includes(currentBlockType) !== false) {
+            // type 2.3
+            data = data.delete(currentBlockType);
+        }
+        data = data.set(blockType, styleType);
+        editorStateWithBlockType = RichTextEditorUtil.toggleBlockType(editorState, blockType);
+
     } else {
-        editorStateWithBlockType = editorState;
+        // 1.styleType改变：设置新样式
+        // 2.styleType没变：返回unstyled
+        data = data.set(blockType, styleType);
+        if (currentStyleType == styleType) {
+            // type 2
+            data = data.delete(blockType);
+            editorStateWithBlockType = RichTextEditorUtil.toggleBlockType(editorState, blockType);
+        } else {
+            // type 1
+            data = data.set(blockType, styleType);
+            editorStateWithBlockType = editorState;
+        }
     }
 
     const editorStateWithData: EditorState = setBlockData(editorStateWithBlockType, data);
