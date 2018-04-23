@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 const UL_WRAP: JSX.Element = React.createElement('ul');
 const OL_WRAP: JSX.Element = React.createElement('ol');
@@ -78,3 +78,32 @@ export const DefaultDraftBlockStyle: any = Map({
 export const getDraftBlockStyleMap = () => {
     return DefaultDraftBlockStyle;
 };
+
+/**
+ * UL样式集合，需要与src\component\assets\Sass\Indent.scss中的$LIST_STYLE_UL保持一致
+ */
+const UnorderedStyleType: List<string> = List(
+    [
+        'disc',
+        'circle',
+        'square'
+    ]
+);
+
+/**
+ * OL样式集合，需要与src\component\assets\Sass\Indent.scss中的$LIST_STYLE_OL保持一致
+ */
+const OrderedStyleType: List<string> = List(
+    [
+        'decimal',
+        'lower-alpha',
+        'lower-roman'
+    ]
+);
+
+export const listStyleTypeMap: Map<string, List<string>> = Map(
+    {
+        'unordered-list-item': UnorderedStyleType,
+        'ordered-list-item': OrderedStyleType
+    }
+);

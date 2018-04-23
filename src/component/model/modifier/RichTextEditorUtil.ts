@@ -9,7 +9,7 @@ import { DraftEditorCommand } from '../constants/DraftEditorCommand';
 import { adjustBlockDepthForContentState } from '../transaction/adjustBlockDepthForContentState';
 import { DraftModifier } from './DraftModifier';
 
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { utils } from '../../utils/fbjs';
 const { nullthrows } = utils;
 
@@ -232,6 +232,9 @@ export const RichTextEditorUtil = {
         if (!e.shiftKey && depth === maxDepth) {
             return editorState;
         }
+        if (e.shiftKey && depth === 0) {
+            return editorState;
+        }
 
         maxDepth = Math.min(blockAbove.getDepth() + 1, maxDepth);
 
@@ -270,8 +273,9 @@ export const RichTextEditorUtil = {
             }
 
             if (type !== 'unstyled') {
-                // 清除样式的时候把depth重置为0
-                return DraftModifier.setBlockType(content, selection, 'unstyled', 0);
+                // 清除样式的时候把depth重置为0，把data清空
+                const contentStateWithOutData: ContentState = DraftModifier.setBlockData(content, selection, Map() as any);
+                return DraftModifier.setBlockType(contentStateWithOutData, selection, 'unstyled', 0);
             }
         }
 

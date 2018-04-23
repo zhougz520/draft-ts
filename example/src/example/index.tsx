@@ -4,7 +4,7 @@ import { Button, Select, Radio, Dropdown, Menu } from 'antd';
 
 import './index.scss';
 
-const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils, FbjsUtils } = DraftPublic;
+const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils, FbjsUtils, DefaultDraftBlockStyle } = DraftPublic;
 const { cx } = FbjsUtils;
 
 export default class Example extends React.PureComponent<any, any> {
@@ -308,6 +308,8 @@ const InlineStyleControls: any = (props: any) => {
 const BLOCK_STYLES: any = [
     { label: 'H1', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
+    { label: 'UL', style: 'unordered-list-item' },
+    { label: 'OL', style: 'ordered-list-item' }  
 ];
 
 const BlockStyleControls: any = (props: any) => {
@@ -422,8 +424,8 @@ const TextAlignControls: any = (props: any) => {
     );
 }
 
-const UL_TYPE = ['disc', 'circle', 'square'];
-const OL_TYPE = ['decimal', 'lower-alpha', 'lower-roman'];
+const UL_TYPE = DefaultDraftBlockStyle.listStyleTypeMap.get('unordered-list-item').toJS();
+const OL_TYPE = DefaultDraftBlockStyle.listStyleTypeMap.get('ordered-list-item').toJS();
 const ListTypeControls: any = (props: any) => {
     const menu = (
         <Menu onClick={props.onToggle}>

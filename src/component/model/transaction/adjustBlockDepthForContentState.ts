@@ -2,6 +2,9 @@ import { ContentState } from '../immutable/ContentState';
 import { SelectionState } from '../immutable/SelectionState';
 import { BlockMap } from '../immutable/BlockMapBuilder';
 import { ContentBlock } from '../immutable/ContentBlock';
+import { listStyleTypeMap } from '../immutable/DefaultDraftBlockStyle';
+
+import { Map, List } from 'immutable';
 
 /**
  * 修改Block的层级数
@@ -27,6 +30,23 @@ export function adjustBlockDepthForContentState(
         .map((block: ContentBlock) => {
             let depth: number = block.getDepth() + adjustment;
             depth = Math.max(0, Math.min(depth, maxDepth));
+
+            const data: Map<any, any> = block.getData();
+            // 当前的blockType
+            const blockType: string = block.getType();
+            // 当前的styleType
+            const styleType: string | undefined = data.get(blockType);
+            if (styleType !== undefined) {
+                // 当前blockType对应的styleType的List
+                const listStyleType: List<string> = listStyleTypeMap.get(blockType);
+                const listSize: number = listStyleType.size;
+                const keyOfStyleType: number = listStyleType.keyOf(styleType);
+                // 计算tab下一个样式的key
+                const nextKeyOfStyleType: number = (keyOfStyleType + adjustment) % listSize;
+                let config: Map<string, string> = Map();
+                config = config.set(blockType, listStyleType.get(nextKeyOfStyleType));
+                block = block.merge({ data: data.merge(config) }) as ContentBlock;
+            }
 
             return block.set('depth', depth);
         });

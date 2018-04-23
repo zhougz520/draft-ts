@@ -68,26 +68,43 @@ div.editorContainer {
     }
     
     ol {
-        li {
-            counter-reset: resets(1, $MAX_INDENT);
-            counter-increment: unquote('list-0');
-            &:before {
-                content: unquote('counter(list-0, ' + nth($LIST_STYLE_OL, 1) + ')') '. ';
-                position: absolute;
-            }
-        }
-        @for $i from 1 through $MAX_INDENT {
-            li.ql-indent-#{$i} {
-                counter-increment: unquote('list-#{$i}');
+        @each $olType in $LIST_STYLE_OL {
+            li:not(.ordered-list-item-#{$olType}) {
+                counter-reset: resets(1, $MAX_INDENT);
+                counter-increment: unquote('list-0');
                 &:before {
-                    content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE_OL, $i % 3 + 1) + ')') '. ';
+                    content: unquote('counter(list-0, ' + nth($LIST_STYLE_OL, 1) + ')') '. ';
                     position: absolute;
                 }
             }
-            @if $i < $MAX_INDENT {
-                li.ql-indent-#{$i} {
-                    counter-reset: resets(($i+1), $MAX_INDENT)
-                }            
+            li.ordered-list-item-#{$olType} {
+                counter-reset: resets(1, $MAX_INDENT);
+                counter-increment: unquote('list-0');
+                &:before {
+                    content: unquote('counter(list-0, ' +  $olType + ')') '. ' !important;
+                    position: absolute;
+                }                
+            }
+            @for $i from 1 through $MAX_INDENT {
+                li.ql-indent-#{$i}:not(.ordered-list-item-#{$olType}) {
+                    counter-increment: unquote('list-#{$i}');
+                    &:before {
+                        content: unquote('counter(list-#{$i}, ' + nth($LIST_STYLE_OL, $i % 3 + 1) + ')') '. ';
+                        position: absolute;
+                    }
+                }
+                li.ql-indent-#{$i}.ordered-list-item-#{$olType} {
+                    counter-increment: unquote('list-#{$i}');
+                    &:before {
+                        content: unquote('counter(list-#{$i}, ' + $olType + ')') '. ' !important;
+                        position: absolute;
+                    }
+                }                
+                @if $i < $MAX_INDENT {
+                    li.ql-indent-#{$i} {
+                        counter-reset: resets(($i+1), $MAX_INDENT)
+                    }            
+                }
             }
         }
     }
@@ -119,19 +136,4 @@ div.editorContainer {
             list-style-type: square !important;
         }
     }
-
-    ol {
-        li.unordered-list-item-decimal {
-            list-style-type: decimal !important;
-        }
-    
-        li.unordered-list-item-lower-alpha {
-            list-style-type: lower-alpha !important;
-        }
-    
-        li.unordered-list-item-lower-roman {
-            list-style-type: lower-roman !important;
-        }
-    }    
-
 }
