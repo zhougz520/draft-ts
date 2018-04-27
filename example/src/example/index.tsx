@@ -7,6 +7,8 @@ import './index.scss';
 const { Editor, EditorState, RichUtils, InlineUtils, BlockUtils, FbjsUtils, DefaultDraftBlockStyle } = DraftPublic;
 const { cx } = FbjsUtils;
 
+/* tslint:disable:no-console */
+/* tslint:disable:jsx-no-multiline-js */
 export default class Example extends React.PureComponent<any, any> {
     constructor(props: any) {
         super(props);
@@ -49,7 +51,7 @@ export default class Example extends React.PureComponent<any, any> {
                 'unordered-list-item',
                 e.key === undefined ? 'disc' : e.key
             )
-        ); 
+        );
     }
 
     toggleOLBlockTypeClass = (e: any) => {
@@ -59,7 +61,7 @@ export default class Example extends React.PureComponent<any, any> {
                 'ordered-list-item',
                 e.key === undefined ? 'decimal' : e.key
             )
-        ); 
+        );
     }
 
     toggleInlineStyle = (inlineStyle: any) => {
@@ -89,7 +91,7 @@ export default class Example extends React.PureComponent<any, any> {
                 color.target.value
             )
         );
-    }    
+    }
 
     toggleFontSize = (fontSize: any) => {
         this.onChange(
@@ -108,7 +110,7 @@ export default class Example extends React.PureComponent<any, any> {
                 'fontFamily',
                 fontFamily
             )
-        );        
+        );
     }
 
     toggleTextAlign = (textAlign: any) => {
@@ -119,23 +121,23 @@ export default class Example extends React.PureComponent<any, any> {
                     this.state.editorState,
                     { 'text-align': textAlign.target.value }
                 )
-            );  
+            );
         } else {
             this.onChange(
                 BlockUtils.mergeBlockData(
                     this.state.editorState,
                     { 'text-align': undefined }
                 )
-            );             
+            );
         }
-         
+
     }
 
     blockStyleFn = (block: any): string => {
         const blockAlignment = block.getData() && block.getData().get('text-align');
         const styleULType = block.getData() && block.getData().get('unordered-list-item');
         const styleOLType = block.getData() && block.getData().get('ordered-list-item');
-                
+
         return this.getListItemClasses(blockAlignment, styleULType === undefined ? styleOLType : styleULType);
     }
 
@@ -150,7 +152,7 @@ export default class Example extends React.PureComponent<any, any> {
             'unordered-list-item-square': styleType === 'square',
             'ordered-list-item-decimal': styleType === 'decimal',
             'ordered-list-item-lower-alpha': styleType === 'lower-alpha',
-            'ordered-list-item-lower-roman': styleType === 'lower-roman',            
+            'ordered-list-item-lower-roman': styleType === 'lower-roman'
         });
     }
 
@@ -160,7 +162,7 @@ export default class Example extends React.PureComponent<any, any> {
 
         return (
             <div className="RichEditor-root">
-                <div id="msGrid" style={{ height: '24px', width: '100%'}}>
+                <div id="msGrid" style={{ height: '24px', width: '100%' }}>
                     Sass Test
                 </div>
                 <BlockStyleControls
@@ -168,18 +170,18 @@ export default class Example extends React.PureComponent<any, any> {
                     onToggle={this.toggleBlockType}
                 />
                 <div className="RichEditor-controls">
-                    <ListTypeControls 
+                    <ListTypeControls
                         editorState={editorState}
                         onToggle={this.toggleULBlockTypeClass}
                         type={'UL'}
-                        list={UL_TYPE}               
+                        list={UL_TYPE}
                     />
-                    <ListTypeControls 
+                    <ListTypeControls
                         editorState={editorState}
                         onToggle={this.toggleOLBlockTypeClass}
                         type={'OL'}
-                        list={OL_TYPE}                 
-                    />                    
+                        list={OL_TYPE}
+                    />
                 </div>
                 <InlineStyleControls
                     editorState={editorState}
@@ -187,24 +189,24 @@ export default class Example extends React.PureComponent<any, any> {
                 />
                 <TextAlignControls
                     editorState={editorState}
-                    onToggle={this.toggleTextAlign}                
+                    onToggle={this.toggleTextAlign}
                 />
                 FontSize:<FontSizeControls
                     editorState={editorState}
-                    onToggle={this.toggleFontSize}                    
+                    onToggle={this.toggleFontSize}
                 />
                 &nbsp;&nbsp;FontFamily:<FontFamilyControls
                     editorState={editorState}
-                    onToggle={this.toggleFontFamily}                    
+                    onToggle={this.toggleFontFamily}
                 />
                 &nbsp;&nbsp;Color:<ColorControls
                     editorState={editorState}
-                    onToggle={this.toggleColorStyle}                     
+                    onToggle={this.toggleColorStyle}
                 />
                 &nbsp;&nbsp;BgColor:<BgColorControls
                     editorState={editorState}
-                    onToggle={this.toggleBgColorStyle}                     
-                />                
+                    onToggle={this.toggleBgColorStyle}
+                />
                 <div className="RichEditor-editor" onClick={this.focus}>
                     <Editor
                         editorState={editorState}
@@ -234,6 +236,7 @@ export class StyleButton extends React.Component<any, any> {
     }
 
     render() {
+        // tslint:disable-next-line:no-unnecessary-initializer
         let primary: any = undefined;
         if (this.props.active) {
             primary = 'primary';
@@ -273,7 +276,7 @@ export class StyleSelect extends React.Component<any, any> {
                 }
             </Select>
         );
-    }    
+    }
 }
 /* tslint:enable:max-classes-per-file */
 
@@ -309,7 +312,7 @@ const BLOCK_STYLES: any = [
     { label: 'H1', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
     { label: 'UL', style: 'unordered-list-item' },
-    { label: 'OL', style: 'ordered-list-item' }  
+    { label: 'OL', style: 'ordered-list-item' }
 ];
 
 const BlockStyleControls: any = (props: any) => {
@@ -331,7 +334,7 @@ const BlockStyleControls: any = (props: any) => {
                     onToggle={props.onToggle}
                     style={type.style}
                 />
-            )}           
+            )}
         </div>
     );
 };
@@ -339,7 +342,7 @@ const BlockStyleControls: any = (props: any) => {
 const FONT_SIZE: any = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96];
 const FontSizeControls: any = (props: any) => {
     const { editorState } = props;
-    let fontSize: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTSIZE']).FONTSIZE
+    let fontSize: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTSIZE']).FONTSIZE;
     if (fontSize) {
         fontSize = fontSize.substring(9);
     }
@@ -347,12 +350,12 @@ const FontSizeControls: any = (props: any) => {
     return (
         <StyleSelect selected={fontSize} options={FONT_SIZE} onToggle={props.onToggle} />
     );
-}
+};
 
 const FONT_FAMILY: any = ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'];
 const FontFamilyControls: any = (props: any) => {
     const { editorState } = props;
-    let fontFamily: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTFAMILY']).FONTFAMILY
+    let fontFamily: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['FONTFAMILY']).FONTFAMILY;
     if (fontFamily) {
         fontFamily = fontFamily.substring(11);
     }
@@ -360,12 +363,12 @@ const FontFamilyControls: any = (props: any) => {
     return (
         <StyleSelect selected={fontFamily} options={FONT_FAMILY} onToggle={props.onToggle} />
     );
-}
+};
 
 const COLOR_LIST = ['black', 'red', 'orange', 'blue'];
 const ColorControls: any = (props: any) => {
     const { editorState } = props;
-    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['COLOR']).COLOR
+    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['COLOR']).COLOR;
     if (colorStyle) {
         colorStyle = colorStyle.substring(6);
     }
@@ -375,17 +378,17 @@ const ColorControls: any = (props: any) => {
             {
                 COLOR_LIST.map(
                     (color: any) => {
-                        return <Radio.Button value={color} key={color} style={{color: color}}>{color}</Radio.Button>
+                        return <Radio.Button value={color} key={color} style={{ color }}>{color}</Radio.Button>;
                     }
                 )
             }
         </Radio.Group>
     );
-}
+};
 
 const BgColorControls: any = (props: any) => {
     const { editorState } = props;
-    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['BGCOLOR']).BGCOLOR
+    let colorStyle: any = InlineUtils.getSelectionCustomInlineStyle(editorState, ['BGCOLOR']).BGCOLOR;
     if (colorStyle) {
         colorStyle = colorStyle.substring(8);
     }
@@ -395,18 +398,18 @@ const BgColorControls: any = (props: any) => {
             {
                 COLOR_LIST.map(
                     (color: any) => {
-                        return <Radio.Button value={color} key={color} style={{color: color}}>{color}</Radio.Button>
+                        return <Radio.Button value={color} key={color} style={{ color }}>{color}</Radio.Button>;
                     }
                 )
             }
         </Radio.Group>
     );
-}
+};
 
 const TEXT_ALIGN = ['left', 'center', 'right', 'justify'];
 const TextAlignControls: any = (props: any) => {
     const { editorState } = props;
-    let textAlign: Map<any, any> = BlockUtils.getSelectedBlocksMetadata(editorState).get('text-align');
+    const textAlign: Map<any, any> = BlockUtils.getSelectedBlocksMetadata(editorState).get('text-align');
 
     return (
         <div className="RichEditor-controls">
@@ -415,14 +418,14 @@ const TextAlignControls: any = (props: any) => {
                 {
                     TEXT_ALIGN.map(
                         (align: any) => {
-                            return <Radio.Button value={align} key={align}>{align}</Radio.Button>
+                            return <Radio.Button value={align} key={align}>{align}</Radio.Button>;
                         }
                     )
                 }
             </Radio.Group>
         </div>
     );
-}
+};
 
 const UL_TYPE = DefaultDraftBlockStyle.listStyleTypeMap.get('unordered-list-item').toJS();
 const OL_TYPE = DefaultDraftBlockStyle.listStyleTypeMap.get('ordered-list-item').toJS();
@@ -432,16 +435,16 @@ const ListTypeControls: any = (props: any) => {
             {
                 props.list.map(
                     (type: any) => {
-                        return <Menu.Item key={type}>{type}</Menu.Item>
+                        return <Menu.Item key={type}>{type}</Menu.Item>;
                     }
                 )
             }
         </Menu>
-    );    
+    );
 
     return (
         <Dropdown.Button onClick={props.onToggle} overlay={menu}>
             {props.type}
-        </Dropdown.Button>        
+        </Dropdown.Button>
     );
-}
+};

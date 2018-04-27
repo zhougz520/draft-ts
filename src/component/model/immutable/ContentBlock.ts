@@ -68,7 +68,7 @@ export class ContentBlock extends ContentBlockRecord {
 
     getData(): Map<any, any> {
         return this.get('data');
-    }    
+    }
 
     getInlineStyleAt(offset: number): DraftInlineStyle {
         const character: CharacterMetadata = this.getCharacterList().get(offset);

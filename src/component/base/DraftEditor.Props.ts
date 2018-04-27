@@ -38,7 +38,7 @@ export interface IDraftEditorProps {
     textAlignment?: DraftTextAlignment;
 
     // 设置block的自定义样式，返回className
-    blockStyleFn?: (block: ContentBlock) => string,
+    blockStyleFn?: (block: ContentBlock) => string;
 
     keyBindingFn?: (e: any) => string | null;
 

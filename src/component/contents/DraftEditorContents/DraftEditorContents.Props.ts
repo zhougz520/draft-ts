@@ -6,5 +6,5 @@ export interface IDraftEditorContentsProps {
     editorKey: string;
     inlineStyleRenderMap: any;
     blockStyleRenderMap: any;
-    blockStyleFn: (block: ContentBlock) => string,
+    blockStyleFn: (block: ContentBlock) => string;
 }

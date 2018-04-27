@@ -108,12 +108,12 @@ export const DraftModifier = {
     ): ContentState {
         let config: any = {
             type: blockType
-        }
+        };
         if (depth !== undefined) {
             config = {
                 type: blockType,
                 depth
-            }
+            };
         }
 
         return modifyBlockForContentState(contentState, selectionState, (block: ContentBlock) =>
@@ -124,24 +124,24 @@ export const DraftModifier = {
     setBlockData(
         contentState: ContentState,
         selectionState: SelectionState,
-        blockData: Map<any, any>,
+        blockData: Map<any, any>
     ): ContentState {
         return modifyBlockForContentState(
             contentState,
             selectionState,
-            (block: ContentBlock) => block.merge({ data: blockData }) as ContentBlock,
+            (block: ContentBlock) => block.merge({ data: blockData }) as ContentBlock
         );
     },
 
     mergeBlockData(
         contentState: ContentState,
         selectionState: SelectionState,
-        blockData: Map<any, any>,
+        blockData: Map<any, any>
     ): ContentState {
         return modifyBlockForContentState(
             contentState,
             selectionState,
-            (block: ContentBlock) => block.merge({ data: block.getData().merge(blockData) }) as ContentBlock,
+            (block: ContentBlock) => block.merge({ data: block.getData().merge(blockData) }) as ContentBlock
         );
-    },    
+    }
 };

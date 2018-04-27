@@ -92,7 +92,7 @@ export class DraftEditorContents extends React.Component<IDraftEditorContentsPro
                 configForType.element || blockStyleRenderMap.get('unstyled').element;
 
             const depth: number = block.getDepth();
-            let className: string = this.props.blockStyleFn(block);;
+            let className: string = this.props.blockStyleFn(block);
 
             if (Element === 'li') {
                 className = joinClasses(className, DraftStyleDefault_depth(depth));

@@ -50,19 +50,21 @@ export function setBlockData(
         editorState.getSelection(),
         data
     );
-    return EditorState.push(editorState, newContentState, "change-block-data");
+
+    return EditorState.push(editorState, newContentState, 'change-block-data');
 }
 
 export function mergeBlockData(
     editorState: EditorState,
-    data: any  
+    data: any
 ): EditorState {
     const newContentState: ContentState = DraftModifier.mergeBlockData(
         editorState.getCurrentContent(),
         editorState.getSelection(),
         data
     );
-    return EditorState.push(editorState, newContentState, "change-block-data");
+
+    return EditorState.push(editorState, newContentState, 'change-block-data');
 }
 
 export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, any> {
@@ -90,6 +92,7 @@ export function getSelectedBlocksMetadata(editorState: EditorState): Map<any, an
             }
         }
     }
+
     return metaData;
 }
 
@@ -114,8 +117,8 @@ export function setListBlockStyleData(
     const selection: SelectionState = editorState.getSelection();
     const content: ContentState = editorState.getCurrentContent();
     const key: string = selection.getAnchorKey();
-    const block: ContentBlock = content.getBlockForKey(key); 
-   
+    const block: ContentBlock = content.getBlockForKey(key);
+
     const currentBlockData: any = getSelectedBlocksMetadata(editorState);
     const currentBlockType: string = block.getType();
     const currentStyleType: string = currentBlockData.get(blockType);
@@ -137,7 +140,7 @@ export function setListBlockStyleData(
         // 1.styleType改变：设置新样式
         // 2.styleType没变：返回unstyled
         data = data.set(blockType, styleType);
-        if (currentStyleType == styleType) {
+        if (currentStyleType === styleType) {
             // type 2
             data = data.delete(blockType);
             editorStateWithBlockType = RichTextEditorUtil.toggleBlockType(editorState, blockType);

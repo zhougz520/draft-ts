@@ -7,7 +7,7 @@ export const DraftStyleDefault_block: React.CSSProperties = {
 
 export const DraftStyleDefault_depth = (depth: number): string => {
     if (depth === 0) {
-        return ''
+        return '';
     } else {
         return 'ql-indent-' + depth;
     }

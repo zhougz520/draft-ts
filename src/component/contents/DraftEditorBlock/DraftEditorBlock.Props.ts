@@ -24,5 +24,5 @@ export interface IDraftEditorBlockProps {
 
     inlineStyleRenderMap: any;
 
-    blockStyleFn: Function
+    blockStyleFn: Function;
 }

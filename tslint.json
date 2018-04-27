@@ -44,11 +44,12 @@
             true,
             "ignore-same-line"
         ],
-        "object-literal-sort-keys": false,        
-        "variable-name": false,        
+        "object-literal-sort-keys": false,
+        "no-conditional-assignment": false,
+        "variable-name": false,
+        "no-console": true,
         "no-unused-expression": false,
-        "prefer-for-of": false,
-        "jsx-no-multiline-js": false,
+        "prefer-for-of": false
     },
     "rulesDirectory": []
 }

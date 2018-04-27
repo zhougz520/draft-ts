@@ -139,6 +139,7 @@ export const RichTextEditorUtil = {
                 : blockType;
 
         // 当设置样式不为列表的时候depth重置为0
+        // tslint:disable-next-line:no-unnecessary-initializer
         let depth: number | undefined = undefined;
         const specialBlockType: List<string> = List(['unordered-list-item', 'ordered-list-item']);
         if (specialBlockType.includes(typeToSet) === false) {
@@ -274,7 +275,9 @@ export const RichTextEditorUtil = {
 
             if (type !== 'unstyled') {
                 // 清除样式的时候把depth重置为0，把data清空
-                const contentStateWithOutData: ContentState = DraftModifier.setBlockData(content, selection, Map() as any);
+                const contentStateWithOutData: ContentState
+                    = DraftModifier.setBlockData(content, selection, Map() as any);
+
                 return DraftModifier.setBlockType(contentStateWithOutData, selection, 'unstyled', 0);
             }
         }
