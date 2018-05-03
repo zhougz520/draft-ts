@@ -84,6 +84,7 @@ export const getDraftBlockStyleMap = () => {
  */
 const UnorderedStyleType: List<string> = List(
     [
+        'image',
         'disc',
         'circle',
         'square'

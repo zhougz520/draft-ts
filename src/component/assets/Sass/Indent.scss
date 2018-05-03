@@ -1,5 +1,5 @@
 $LIST_STYLE_OL: decimal lower-alpha lower-roman;
-$LIST_STYLE_UL: disc circle square;
+$LIST_STYLE_UL: image disc circle square;
 $LIST_STYLE_WIDTH: 1.2em;
 $LIST_STYLE_MARGIN: 0.3em;
 $LIST_STYLE_OUTER_WIDTH: $LIST_STYLE_MARGIN + $LIST_STYLE_WIDTH;
@@ -58,11 +58,23 @@ div.editorContainer {
 
     ul {
         li {
-            list-style-type: nth($LIST_STYLE_UL, 1);
+            @if nth($LIST_STYLE_UL, 1) == 'image' {
+                list-style-image: url('./image/triangle.png');
+                list-style-type: none;
+            } @else {
+                list-style-type: nth($LIST_STYLE_UL, 1);
+                list-style-image: none;
+            }
         }
         @for $i from 1 through $MAX_INDENT {
             li.ql-indent-#{$i} {
-                list-style-type: nth($LIST_STYLE_UL, $i % 3 + 1);
+                @if nth($LIST_STYLE_UL, $i % 4 + 1) == 'image' {
+                    list-style-image: url('./image/triangle.png');
+                    list-style-type: none;
+                } @else {
+                    list-style-type: nth($LIST_STYLE_UL, $i % 4 + 1);
+                    list-style-image: none;
+                }                
             }
         }
     }
@@ -124,16 +136,24 @@ div.editorContainer {
     }
 
     ul {
+        li.unordered-list-item-image {
+            list-style-image: url('./image/triangle.png') !important;
+            list-style-type: none !important;
+        }
+
         li.unordered-list-item-disc {
             list-style-type: disc !important;
+            list-style-image: none !important;
         }
     
         li.unordered-list-item-circle {
             list-style-type: circle !important;
+            list-style-image: none !important;
         }
     
         li.unordered-list-item-square {
             list-style-type: square !important;
+            list-style-image: none !important;
         }
     }
 }
