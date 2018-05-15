@@ -1,0 +1,23 @@
+.DraftEditor-root,
+.DraftEditor-editorContainer,
+.public-DraftEditor-content
+{
+    height: inherit;
+    text-align: inherit;
+}
+
+.DraftEditor-root {
+    position: relative;
+}
+
+.DraftEditor-editorContainer {
+    background-color: rgba(255, 255, 255, 0);
+    /* Repair mysterious missing Safari cursor */
+    border-left: 0.1px solid transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.public-DraftEditor-content[contenteditable="true"] {
+    -webkit-user-modify: read-write-plaintext-only;
+}

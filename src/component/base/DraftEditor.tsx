@@ -1,10 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import {
-    DraftEditor_root,
-    DraftEditor_editorContainer
-} from '../assets/DraftEditorStyle';
 import { IDraftEditorProps, IDraftEditorState, IDraftScrollPosition } from './DraftEditor.Props';
 import { EditorState } from '../model/immutable/EditorState';
 import { ContentBlock } from '../model/immutable/ContentBlock';
@@ -20,6 +16,8 @@ import { getDefaultKeyBinding } from '../utils/getDefaultKeyBinding';
 import { generateRandomKey } from '../model/keys/generateRandomKey';
 import { getDraftInlineStyleMap } from '../utils/collection/inline';
 import { utils } from '../utils/fbjs';
+
+import '../assets/Sass/DraftEditor.scss';
 
 const { Style, getScrollPosition, invariant, Scroll, emptyFunction } = utils;
 const { getDraftBlockStyleMap } = DefaultDraftBlockStyle;
@@ -83,14 +81,23 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
     public render(): React.ReactNode {
         const { readOnly } = this.props;
 
+        const contentStyle = {
+            outline: 'none',
+            // fix parent-draggable Safari bug. #1326
+            userSelect: 'text',
+            WebkitUserSelect: 'text',
+            whiteSpace: 'pre-wrap',
+            wordWrap: 'break-word'
+        };
+
         return (
-            <div style={DraftEditor_root()}>
+            <div className="DraftEditor-root">
                 <div
-                    style={DraftEditor_editorContainer}
+                    className="DraftEditor-editorContainer"
                     ref={(ref: HTMLElement | null) => (this.editorContainer = ref)}
                 >
                     <div
-                        className="editorContainer"
+                        className="public-DraftEditor-content"
                         contentEditable={!readOnly}
                         // TODO data-contents
                         onBeforeInput={this._onBeforeInput}
@@ -103,6 +110,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
                         onKeyPress={this._onKeyPress}
                         onSelect={this._onSelect}
                         ref={(ref: HTMLElement | null) => (this.editor = ref)}
+                        style={contentStyle}
                         suppressContentEditableWarning
                     >
                         <DraftEditorContents

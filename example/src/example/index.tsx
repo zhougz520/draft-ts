@@ -163,9 +163,6 @@ export default class Example extends React.PureComponent<any, any> {
 
         return (
             <div className="RichEditor-root">
-                <div id="msGrid" style={{ height: '24px', width: '100%' }}>
-                    Sass Test
-                </div>
                 <BlockStyleControls
                     editorState={editorState}
                     onToggle={this.toggleBlockType}
