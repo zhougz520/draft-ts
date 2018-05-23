@@ -1,5 +1,6 @@
 const debug = require('debug')('draft:dev-compile');
 const gulp = require('gulp');
+const runSequence = require('run-sequence');
 const tasks = require('./tasks');
 
 const dist = 'dev';
@@ -7,8 +8,10 @@ let compileStream = null;
 
 gulp.task('clean', () => tasks.clean(dist));
 
-gulp.task('compile', ['clean'], () => tasks.compile(dist, debug));
+gulp.task('compile', () => tasks.compile(dist, debug));
 
-gulp.task('default', ['compile'], () => {
-    debug('dev mode compiled');
+gulp.task('cssCompile', () => tasks.cssCompile(dist, debug));
+
+gulp.task('default', () => {
+    runSequence('clean', ['compile', 'cssCompile']);
 });

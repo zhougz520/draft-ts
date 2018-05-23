@@ -9,6 +9,7 @@ const merge = require('merge2');
 const minify = composer(uglifyes, console);
 
 const src = ['./src/**/*.ts', './src/**/*.tsx'];
+const css = ['./src/**/*.scss', './src/**/*.sass', './src/**/*.css', './src/**/*.jpg', './src/**/*.png', './src/**/*.gif'];
 
 const clean = dist => del(`./${dist}`);
 
@@ -39,8 +40,18 @@ const compile = (dist, debug, dev = true) => {
     ]);
 }
 
+const cssCompile = (dist, debug) => {
+    debug('cssCompiling...');
+
+    return (
+        gulp.src(css).pipe(gulp.dest(`./${dist}`))
+    );
+}
+
 module.exports = {
     src,
+    css,
     compile,
+    cssCompile,
     clean
 };
