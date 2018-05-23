@@ -110,7 +110,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
                         onKeyPress={this._onKeyPress}
                         onSelect={this._onSelect}
                         ref={(ref: HTMLElement | null) => (this.editor = ref)}
-                        style={contentStyle}
+                        style={contentStyle as any}
                         suppressContentEditableWarning
                     >
                         <DraftEditorContents
@@ -145,7 +145,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
     public focus = (scrollPosition?: IDraftScrollPosition): void => {
         const { editorState } = this.props;
         const alreadyHasFocus: boolean = editorState.getSelection().getHasFocus();
-        const editorNode: Element = ReactDOM.findDOMNode(this.editor as HTMLElement);
+        const editorNode: Element = ReactDOM.findDOMNode(this.editor as HTMLElement) as Element;
 
         if (!editorNode) {
             return;

@@ -15,7 +15,7 @@ export class DraftEditorLeaf extends React.Component<IDraftEditorLeafProps, any>
     public leaf: HTMLElement | null = null;
 
     public shouldComponentUpdate(nextProps: IDraftEditorLeafProps): boolean {
-        const leafNode: Element = ReactDOM.findDOMNode(this.leaf as HTMLElement);
+        const leafNode: Element = ReactDOM.findDOMNode(this.leaf as HTMLElement) as Element;
         invariant(leafNode, 'Missing leafNode');
 
         return (
@@ -89,7 +89,7 @@ export class DraftEditorLeaf extends React.Component<IDraftEditorLeafProps, any>
 
         const node: Node | null = ReactDOM.findDOMNode(this);
         invariant(node, 'Missing node');
-        const child: Node | null = node.firstChild;
+        const child: Node | null = (node as Node).firstChild;
         invariant(child, 'Missing child');
         let targetNode: Node | null;
 

@@ -47,7 +47,7 @@ export class DraftEditorTextNode extends React.Component<IDraftEditorTextNodePro
     }
 
     public shouldComponentUpdate(nextProps: IDraftEditorTextNodeProps): boolean {
-        const node: Element = ReactDOM.findDOMNode(this);
+        const node: Element = ReactDOM.findDOMNode(this) as Element;
         const shouldBeNewline: boolean = nextProps.children === '';
 
         if (shouldBeNewline) {
