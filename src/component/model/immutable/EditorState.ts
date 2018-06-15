@@ -32,9 +32,9 @@ const defaultRecord: {
 export const EditorStateRecord: Record.Class = Record(defaultRecord);
 
 export class EditorState extends EditorStateRecord {
-    static createEmpty(): EditorState {
+    static createEmpty(text: string = ''): EditorState {
         return EditorState.createWithContent(
-            ContentState.createFromText('')
+            ContentState.createFromText(text)
         );
     }
 

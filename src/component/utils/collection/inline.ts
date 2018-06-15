@@ -73,7 +73,7 @@ export function getSelectionInlineStyle(editorState: EditorState): any {
  * @param styleKey
  * @param style
  */
-const addToCustomStyleMap = (styleType: string, styleKey: string, style: string) => {
+const addToCustomStyleMap = (styleType: string, styleKey: string, style: any) => {
     DefaultDraftInlineStyle[styleType][`${styleType.toLowerCase()}-${style}`] = { [`${styleKey}`]: style };
 };
 
@@ -161,7 +161,7 @@ export function extractInlineStyle(editorState: EditorState) {
             } else if (style && style.indexOf('bgcolor-') === 0) {
                 addToCustomStyleMap('bgcolor', 'backgroundColor', style.substr(8));
             } else if (style && style.indexOf('fontsize-') === 0) {
-                addToCustomStyleMap('fontSize', 'fontSize', style.substr(9));
+                addToCustomStyleMap('fontSize', 'fontSize', +style.substr(9));
             } else if (style && style.indexOf('fontfamily-') === 0) {
                 addToCustomStyleMap('fontFamily', 'fontFamily', style.substr(11));
             }

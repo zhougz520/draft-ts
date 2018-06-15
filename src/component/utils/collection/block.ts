@@ -125,7 +125,7 @@ export function setListBlockStyleData(
 
     let data: any = currentBlockData;
     let editorStateWithBlockType: EditorState | null = null;
-    if (currentBlockType !==  blockType) {
+    if (currentBlockType !== blockType) {
         // 1.otherBlockType to ul/ol
         // 2.ul to ol/ol to ul
         // 3.ul/ol to otherBlockType 逻辑在 toggleBlockType方法的(specialBlockType.includes(typeToSet) === false)中判断，删除对应的data
@@ -154,4 +154,59 @@ export function setListBlockStyleData(
     const editorStateWithData: EditorState = setBlockData(editorStateWithBlockType, data);
 
     return editorStateWithData;
+}
+
+/**
+ * 移除所选Block的blockStyle
+ */
+export function removeSelectedBlocksStyle(
+    editorState: EditorState
+): EditorState {
+    const newContentState = RichTextEditorUtil.tryToRemoveBlockStyle(editorState);
+    if (newContentState) {
+        return EditorState.push(editorState, newContentState, 'change-block-type');
+    }
+
+    return editorState;
+}
+
+/**
+ * 新插入一行block
+ * @param editorState 当前editorState
+ */
+export function insertNewUnstyledBlock(editorState: EditorState): EditorState {
+    const newContentState = DraftModifier.splitBlock(
+        editorState.getCurrentContent(),
+        editorState.getSelection()
+    );
+    const newEditorState = EditorState.push(
+        editorState,
+        newContentState,
+        'split-block'
+    );
+
+    return removeSelectedBlocksStyle(newEditorState);
+}
+
+/**
+ * 把选中光标移动到所有文本的最后
+ * @param editorState 当前editorState
+ */
+export function moveSelectionToEndOfBlocks(editorState: EditorState): EditorState {
+    const selection: SelectionState = editorState.getSelection();
+    const content: ContentState = editorState.getCurrentContent();
+    const lastBlock: ContentBlock = content.getLastBlock();
+    const textLength: number = lastBlock.getLength();
+    const endKey: string = lastBlock.getKey();
+
+    return EditorState.set(editorState, {
+        selection: selection.merge({
+            anchorKey: endKey,
+            anchorOffset: textLength,
+            focusKey: endKey,
+            focusOffset: textLength,
+            isBackward: false
+        }),
+        forceSelection: true
+    });
 }

@@ -10,6 +10,9 @@ import * as BlockUtils from './component/utils/collection/block';
 
 import { utils } from './component/utils/fbjs';
 
+import { convertFromDraftStateToRaw } from './component/model/encoding/convertFromDraftStateToRaw';
+import { convertFromRawToDraftState } from './component/model/encoding/convertFromRawToDraftState';
+
 export const DraftPublic = {
     DefaultDraftBlockStyle,
     DefaultDraftInlineStyle,
@@ -22,5 +25,8 @@ export const DraftPublic = {
 
     InlineUtils,
     BlockUtils,
-    FbjsUtils: utils
+    FbjsUtils: utils,
+
+    convertFromDraftStateToRaw,
+    convertFromRawToDraftState
 };

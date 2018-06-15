@@ -48,6 +48,13 @@ export interface IDraftEditorProps {
      */
     readOnly?: boolean;
 
+    /**
+     * 设置编辑器是否显示
+     */
+    disPlay?: boolean;
+
+    tabIndex?: number;
+
     handleKeyCommand?: (
         command: DraftEditorCommand | string,
         editorState: EditorState
@@ -72,4 +79,6 @@ export interface IDraftEditorProps {
      * 用来匹配block ReactElement
      */
     blockStyleRenderMap?: any;
+
+    customContentStyle?: any;
 }
