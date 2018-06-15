@@ -59,6 +59,7 @@ jspm_packages/
 
 dev/
 dist/
+@types/
 
 .DS_Store
 .vscode

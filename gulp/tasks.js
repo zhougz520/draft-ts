@@ -1,17 +1,16 @@
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
-const uglifyes = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const del = require('del');
 const merge = require('merge2');
-
-const minify = composer(uglifyes, console);
 
 const src = ['./src/**/*.ts', './src/**/*.tsx'];
 const css = ['./src/**/*.scss', './src/**/*.sass', './src/**/*.css', './src/**/*.jpg', './src/**/*.png', './src/**/*.gif'];
 
 const clean = dist => del(`./${dist}`);
+
+const cleanTypes = () => del('./@types');
 
 const compile = (dist, debug, dev = true) => {
     debug('compiling...');
@@ -31,12 +30,13 @@ const compile = (dist, debug, dev = true) => {
     if (dev) {
         jsStream = result.js.pipe(sourcemaps.write('.', {includeContent: false, sourceRoot: '../src'}));
     } else {
-        jsStream = result.js.pipe(minify());
+        // jsStream = result.js.pipe(minify());
+        jsStream = result.js;
     }
 
     return merge([
         jsStream.pipe(gulp.dest(`./${dist}`)),
-        result.dts.pipe(gulp.dest(`./${dist}`))
+        result.dts.pipe(gulp.dest('./@types'))
     ]);
 }
 
@@ -53,5 +53,6 @@ module.exports = {
     css,
     compile,
     cssCompile,
-    clean
+    clean,
+    cleanTypes
 };
