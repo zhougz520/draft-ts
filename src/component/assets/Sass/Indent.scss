@@ -62,8 +62,8 @@ div.public-DraftEditor-content {
                 &:before {
                     @if $ulType == 'image' { content: 'Ø' !important; }
                     @if $ulType == 'disc' { content: 'l' !important; }
-                    @if $ulType == 'circle' { content: 'n' !important; }
-                    @if $ulType == 'square' { content: 'p' !important; }
+                    @if $ulType == 'circle' { content: 'p' !important; }
+                    @if $ulType == 'square' { content: 'n' !important; }
                     position: absolute;
                     font-family: 'Wingdings';
                     padding-top: 2px;
