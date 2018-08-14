@@ -1,4 +1,4 @@
-import { Record, OrderedMap, List, OrderedSet } from 'immutable';
+import { Record, OrderedMap, List, OrderedSet, Stack } from 'immutable';
 
 import { SelectionState } from './SelectionState';
 import { ContentState } from './ContentState';
@@ -10,6 +10,7 @@ import { ContentBlock } from './ContentBlock';
 
 // TODO treeMap
 const defaultRecord: {
+    allowUndo: boolean,
     currentContent: ContentState | null,
     forceSelection: boolean,
     inCompositionMode: boolean,
@@ -18,16 +19,21 @@ const defaultRecord: {
     nativelyRenderedContent: ContentState | null,
     selection: SelectionState | null,
     treeMap: OrderedMap<string, List<any>> | null,
+    redoStack: Stack<ContentState>,
+    undoStack: Stack<ContentState>
 } = {
-        currentContent: null,
-        forceSelection: false,
-        inCompositionMode: false,
-        inlineStyleOverride: null,
-        lastChangeType: null,
-        nativelyRenderedContent: null,
-        selection: null,
-        treeMap: null
-    };
+    allowUndo: true,
+    currentContent: null,
+    forceSelection: false,
+    inCompositionMode: false,
+    inlineStyleOverride: null,
+    lastChangeType: null,
+    nativelyRenderedContent: null,
+    selection: null,
+    treeMap: null,
+    redoStack: Stack(),
+    undoStack: Stack()
+};
 
 export const EditorStateRecord: Record.Class = Record(defaultRecord);
 
@@ -46,6 +52,8 @@ export class EditorState extends EditorStateRecord {
 
         return EditorState.create({
             currentContent: contentState,
+            undoStack: Stack(),
+            redoStack: Stack(),
             selection: SelectionState.createEmpty(firstKey)
         });
     }
@@ -137,12 +145,14 @@ export class EditorState extends EditorStateRecord {
 
         const selection: SelectionState = editorState.getSelection();
         const currentContent: ContentState = editorState.getCurrentContent();
+        let undoStack: Stack<ContentState> = editorState.getUndoStack();
         let newContent: ContentState = contentState;
 
         if (
             selection !== currentContent.getSelectionAfter() ||
             mustBecomeBoundary(editorState, changeType)
         ) {
+            undoStack = undoStack.push(currentContent);
             newContent = newContent.set('selectionBefore', selection) as ContentState;
         } else if (
             changeType === 'insert-characters' ||
@@ -171,6 +181,8 @@ export class EditorState extends EditorStateRecord {
 
         const editorStateChanges: any = {
             currentContent: newContent,
+            undoStack,
+            redoStack: Stack(),
             lastChangeType: changeType,
             selection: contentState.getSelectionAfter(),
             forceSelection,
@@ -180,6 +192,64 @@ export class EditorState extends EditorStateRecord {
         return EditorState.set(editorState, editorStateChanges);
     }
 
+    /**
+     * Make the top ContentState in the undo stack the new current content and
+     * push the current content onto the redo stack.
+     */
+    static undo(editorState: EditorState): EditorState {
+        if (!editorState.getAllowUndo()) {
+            return editorState;
+        }
+
+        const undoStack: Stack<ContentState> = editorState.getUndoStack();
+        const newCurrentContent: ContentState = undoStack.peek();
+        if (!newCurrentContent) {
+            return editorState;
+        }
+
+        const currentContent: ContentState = editorState.getCurrentContent();
+
+        return EditorState.set(editorState, {
+            currentContent: newCurrentContent,
+            undoStack: undoStack.shift(),
+            redoStack: editorState.getRedoStack().push(currentContent),
+            forceSelection: true,
+            inlineStyleOverride: null,
+            lastChangeType: 'undo',
+            nativelyRenderedContent: null,
+            selection: currentContent.getSelectionBefore()
+        });
+    }
+
+    /**
+     * Make the top ContentState in the redo stack the new current content and
+     * push the current content onto the undo stack.
+     */
+    static redo(editorState: EditorState): EditorState {
+        if (!editorState.getAllowUndo()) {
+            return editorState;
+        }
+
+        const redoStack: Stack<ContentState> = editorState.getRedoStack();
+        const newCurrentContent: ContentState = redoStack.peek();
+        if (!newCurrentContent) {
+            return editorState;
+        }
+
+        const currentContent: ContentState = editorState.getCurrentContent();
+
+        return EditorState.set(editorState, {
+            currentContent: newCurrentContent,
+            undoStack: editorState.getUndoStack().push(currentContent),
+            redoStack: redoStack.shift(),
+            forceSelection: true,
+            inlineStyleOverride: null,
+            lastChangeType: 'redo',
+            nativelyRenderedContent: null,
+            selection: newCurrentContent.getSelectionAfter()
+        });
+    }
+
     static setInlineStyleOverride(
         editorState: EditorState,
         inlineStyleOverride: DraftInlineStyle
@@ -187,8 +257,20 @@ export class EditorState extends EditorStateRecord {
         return EditorState.set(editorState, { inlineStyleOverride });
     }
 
+    getAllowUndo(): boolean {
+        return this.get('allowUndo');
+    }
+
     getCurrentContent(): ContentState {
         return this.get('currentContent');
+    }
+
+    getUndoStack(): Stack<ContentState> {
+        return this.get('undoStack');
+    }
+
+    getRedoStack(): Stack<ContentState> {
+        return this.get('redoStack');
     }
 
     getSelection(): SelectionState {

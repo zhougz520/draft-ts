@@ -9,6 +9,7 @@ import { keyCommandInsertNewline } from './commands/keyCommandInsertNewline';
 import { keyCommandMoveSelectionToEndOfBlock } from './commands/keyCommandMoveSelectionToEndOfBlock';
 import { keyCommandMoveSelectionToStartOfBlock } from './commands/keyCommandMoveSelectionToStartOfBlock';
 import { keyCommandPlainBackspace } from './commands/keyCommandPlainBackspace';
+import { keyCommandUndo } from './commands/keyCommandUndo';
 
 import { KeyBindingUtil } from '../../utils/KeyBindingUtil';
 import { utils } from '../../utils/fbjs';
@@ -26,7 +27,7 @@ function onKeyCommand(
 ): EditorState {
     switch (command) {
         case 'redo':
-        // TODO return EditorState.redo(editorState);
+            return EditorState.redo(editorState);
         case 'delete':
         // TODO return keyCommandPlainDelete(editorState);
         case 'delete-word':
@@ -104,7 +105,8 @@ export function editOnKeyDown(editor: DraftEditor, e: any): void {
     if (command === 'undo') {
         // Since undo requires some special updating behavior to keep the editor
         // in sync, handle it separately.
-        // TODO keyCommandUndo(e, editorState, editor.update);
+        keyCommandUndo(e, editorState, editor.update);
+
         return;
     }
 
