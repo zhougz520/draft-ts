@@ -16,6 +16,7 @@ import { getDefaultKeyBinding } from '../utils/getDefaultKeyBinding';
 import { generateRandomKey } from '../model/keys/generateRandomKey';
 import { getDraftInlineStyleMap } from '../utils/collection/inline';
 import { utils } from '../utils/fbjs';
+import { OrderedMap } from 'immutable';
 
 import '../assets/Sass/DraftEditor.scss';
 
@@ -27,7 +28,9 @@ const { getDraftBlockStyleMap } = DefaultDraftBlockStyle;
  */
 const handlerMap: any = {
     edit: DraftEditorEditHandler,
-    composite: DraftEditorCompositionHandler
+    composite: DraftEditorCompositionHandler,
+    cut: null,
+    render: null
 };
 
 /**
@@ -44,6 +47,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
     };
 
     public _blockSelectEvents: boolean;
+    public _clipboard: OrderedMap<string, ContentBlock> | null;
     public _handler: any;
     public _editorKey: string;
     public _latestEditorState: EditorState;
@@ -60,16 +64,20 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
     public _onBlur: any = this._buildHandler('onBlur');
     public _onCompositionEnd: any = this._buildHandler('onCompositionEnd');
     public _onCompositionStart: any = this._buildHandler('onCompositionStart');
+    public _onCopy = this._buildHandler('onCopy');
+    public _onCut = this._buildHandler('onCut');
     public _onFocus: any = this._buildHandler('onFocus');
     public _onInput: any = this._buildHandler('onInput');
     public _onKeyDown: any = this._buildHandler('onKeyDown');
     public _onKeyPress: any = this._buildHandler('onKeyPress');
+    public _onPaste = this._buildHandler('onPaste');
     public _onSelect: any = this._buildHandler('onSelect');
 
     public constructor(props: IDraftEditorProps) {
         super(props);
 
         this._blockSelectEvents = false;
+        this._clipboard = null;
         this._handler = null;
         this._editorKey = props.editorKey || generateRandomKey();
         this._latestEditorState = props.editorState;
@@ -93,7 +101,7 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
         return (
             <div
                 className="DraftEditor-root"
-                style={{display: disPlay ? 'none' : 'block'}}
+                style={{ display: disPlay ? 'none' : 'block' }}
             >
                 <div
                     className="DraftEditor-editorContainer"
@@ -107,10 +115,13 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
                         onBlur={this._onBlur}
                         onCompositionEnd={this._onCompositionEnd}
                         onCompositionStart={this._onCompositionStart}
+                        onCopy={this._onCopy}
+                        onCut={this._onCut}
                         onFocus={this._onFocus}
                         onInput={this._onInput}
                         onKeyDown={this._onKeyDown}
                         onKeyPress={this._onKeyPress}
+                        onPaste={this._onPaste}
                         onSelect={this._onSelect}
                         ref={(ref: HTMLElement | null) => (this.editor = ref)}
                         style={Object.assign(contentStyle, customContentStyle)}
@@ -202,6 +213,14 @@ export class DraftEditor extends React.Component<IDraftEditorProps, IDraftEditor
         this.setState({ contentsKey: this.state.contentsKey + 1 }, () => {
             this.focus(scrollPosition);
         });
+    }
+
+    public setClipboard = (clipboard: OrderedMap<string, ContentBlock> | null): void => {
+        this._clipboard = clipboard;
+    }
+
+    public getClipboard = (): OrderedMap<string, ContentBlock> | null => {
+        return this._clipboard;
     }
 
     /**

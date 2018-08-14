@@ -1,6 +1,7 @@
 /* tslint:disable:no-var-requires */
 const containsNode = require('fbjs/lib/containsNode');
 const cx = require('fbjs/lib/cx');
+const DataTransfer = require('fbjs/lib/DataTransfer');
 const emptyFunction = require('fbjs/lib/emptyFunction');
 const getActiveElement = require('fbjs/lib/getActiveElement');
 const getElementPosition = require('fbjs/lib/getElementPosition');
@@ -20,6 +21,7 @@ const UserAgent = require('fbjs/lib/UserAgent');
 export const utils: any = {
     cx,
     containsNode,
+    DataTransfer,
     emptyFunction,
     getActiveElement,
     getElementPosition,

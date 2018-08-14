@@ -8,8 +8,9 @@ import { insertTextIntoContentState } from '../transaction/insertTextIntoContent
 import { ContentStateInlineStyle } from '../transaction/ContentStateInlineStyle';
 import { modifyBlockForContentState } from '../transaction/modifyBlockForContentState';
 import { splitBlockInContentState } from '../transaction/splitBlockInContentState';
+import { insertFragmentIntoContentState } from '../transaction/insertFragmentIntoContentState';
 
-import { OrderedSet } from 'immutable';
+import { OrderedSet, OrderedMap } from 'immutable';
 
 export const DraftModifier = {
     replaceText(
@@ -33,6 +34,22 @@ export const DraftModifier = {
             withoutText.getSelectionAfter(),
             text,
             character
+        );
+    },
+
+    replaceWithFragment(
+        contentState: ContentState,
+        targetRange: SelectionState,
+        fragment: OrderedMap<string, ContentBlock>
+    ): ContentState {
+        // TODO withoutEntities removeEntitiesAtEdges
+        const afterSelect: ContentState = contentState.set('selectionAfter', targetRange) as ContentState;
+        const withoutText: ContentState = removeRangeFromContentState(afterSelect, targetRange);
+
+        return insertFragmentIntoContentState(
+            withoutText,
+            withoutText.getSelectionAfter(),
+            fragment
         );
     },
 
