@@ -16,6 +16,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "prepublish": "yarn run build",
     "start": "better-npm-run start",
     "build": "yarn run lint && better-npm-run compile-prod",
     "test": "echo \"Error: no test specified\" && exit 1",
