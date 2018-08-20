@@ -1,10 +1,16 @@
 import { DraftEditor } from '../../base/DraftEditor';
 import { EditorState } from '../../model/immutable/EditorState';
 import { ContentState } from '../../model/immutable/ContentState';
-import { BlockMap } from '../../model/immutable/BlockMapBuilder';
+import { ContentBlock } from '../../model/immutable/ContentBlock';
+import { CharacterMetadata } from '../../model/immutable/CharacterMetadata';
+import { BlockMap, BlockMapBuilder } from '../../model/immutable/BlockMapBuilder';
 import { DraftModifier } from '../../model/modifier/DraftModifier';
+import { RichTextEditorUtil } from '../../model/modifier/RichTextEditorUtil';
+import { generateRandomKey } from '../../model/keys/generateRandomKey';
+import { sanitizeDraftText } from '../../model/encoding/sanitizeDraftText';
 
 import { splitTextIntoTextBlocks } from '../../utils/splitTextIntoTextBlocks';
+import { List, Repeat } from 'immutable';
 import { utils } from '../../utils/fbjs';
 const { DataTransfer } = utils;
 
@@ -17,6 +23,7 @@ export function editOnPaste(editor: DraftEditor, e: any): void {
     let textBlocks: string[] = [];
     const text = data.getText();
     const html = data.getHTML();
+    const editorState = editor._latestEditorState;
 
     // TODO 处理自定义粘贴
 
@@ -54,6 +61,23 @@ export function editOnPaste(editor: DraftEditor, e: any): void {
         }
     }
     // TODO 这里只处理粘贴富文本，其他模式后面按需补充
+
+    if (textBlocks.length) {
+        const character: CharacterMetadata = CharacterMetadata.create({
+            style: editorState.getCurrentInlineStyle()
+        });
+
+        const currentBlockType: string = RichTextEditorUtil.getCurrentBlockType(editorState);
+
+        const textFragment: ContentBlock[] = processText(
+            textBlocks,
+            character,
+            currentBlockType
+        );
+
+        const textMap: BlockMap = BlockMapBuilder.createFromArray(textFragment);
+        editor.update(insertFragment(editor._latestEditorState, textMap));
+    }
 }
 
 function insertFragment(
@@ -73,5 +97,24 @@ function insertFragment(
         editorState,
         newContent,
         'insert-fragment'
+    );
+}
+
+function processText(
+    textBlocks: string[],
+    character: CharacterMetadata,
+    type: string   // TODO DraftBlockType
+): ContentBlock[] {
+    return textBlocks.map(
+        (textLine: string) => {
+            textLine = sanitizeDraftText(textLine);
+
+            return new ContentBlock({
+                key: generateRandomKey(),
+                type,
+                text: textLine,
+                characterList: List(Repeat(character, textLine.length))
+            });
+        }
     );
 }

@@ -20,6 +20,15 @@ const { nullthrows } = utils;
 const MAX_INDENT: number = 9;
 
 export const RichTextEditorUtil = {
+    // TODO DraftBlockType
+    getCurrentBlockType(editorState: EditorState): string {
+        const selection: SelectionState = editorState.getSelection();
+
+        return editorState.getCurrentContent()
+            .getBlockForKey(selection.getStartKey())
+            .getType();
+    },
+
     handleKeyCommand(
         editorState: EditorState,
         command: DraftEditorCommand | string
@@ -32,8 +41,8 @@ export const RichTextEditorUtil = {
             case 'underline':
                 return RichTextEditorUtil.toggleInlineStyle(editorState, 'UNDERLINE');
             case 'code':
-                // TODO toggleCode
-                // return RichTextEditorUtil.toggleCode(editorState);
+            // TODO toggleCode
+            // return RichTextEditorUtil.toggleCode(editorState);
             case 'backspace':
             case 'backspace-word':
             case 'backspace-to-start-of-line':
@@ -41,8 +50,8 @@ export const RichTextEditorUtil = {
             case 'delete':
             case 'delete-word':
             case 'delete-to-end-of-block':
-                // TODO onDelete
-                // return RichTextEditorUtil.onDelete(editorState);
+            // TODO onDelete
+            // return RichTextEditorUtil.onDelete(editorState);
             default:
                 // they may have custom editor commands; ignore those
                 return null;
