@@ -20,7 +20,7 @@ let textInputData: string = '';
 
 export const DraftEditorCompositionHandler: any = {
     onBeforeInput(editor: DraftEditor, e: any): void {
-        textInputData = (textInputData || '') + e.nativeEvent.data;
+        textInputData = (textInputData || '') + e.data;
     },
 
     onCompositionStart(editor: DraftEditor): void {

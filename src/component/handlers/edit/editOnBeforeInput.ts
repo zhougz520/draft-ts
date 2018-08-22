@@ -35,7 +35,7 @@ export function editOnBeforeInput(editor: DraftEditor, e: any): void {
 
     const editorState: EditorState = editor._latestEditorState;
 
-    const chars: string = e.nativeEvent.data;
+    const chars: string = e.data;
 
     if (!chars) {
         return;
