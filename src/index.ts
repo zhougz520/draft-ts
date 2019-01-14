@@ -12,6 +12,7 @@ import { utils } from './component/utils/fbjs';
 
 import { convertFromDraftStateToRaw } from './component/model/encoding/convertFromDraftStateToRaw';
 import { convertFromRawToDraftState } from './component/model/encoding/convertFromRawToDraftState';
+import { generateRandomKey } from './component/model/keys/generateRandomKey';
 
 export const DraftPublic = {
     DefaultDraftBlockStyle,
@@ -28,5 +29,6 @@ export const DraftPublic = {
     FbjsUtils: utils,
 
     convertFromDraftStateToRaw,
-    convertFromRawToDraftState
+    convertFromRawToDraftState,
+    genKey: generateRandomKey
 };
